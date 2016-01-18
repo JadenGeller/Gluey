@@ -23,3 +23,5 @@ e.value = 20
 try Binding.unify(a, e) // UNIFICATION ERROR!!!
 // Since a.value = 10 and b.value = 20, they cannot be unified.
 ```
+
+Gluey also defines a `Term<Value>` enum with cases `Variable(Binding<Value>)` and `Constant(Value)` that makes it easy to unify known constants with unknown variables.
