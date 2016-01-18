@@ -104,4 +104,33 @@ class GlueyTests: XCTestCase {
         b.value = 12
         XCTAssertEqual(a.value, 12)
     }
+    
+    func testBacktracking() {
+        let a = Binding<Int>()
+        let b = Binding<Int>()
+        let c = Binding<Int>()
+        let d = Binding<Int>()
+        let e = Binding<Int>()
+        
+        try! Binding.unify(a, b)
+        try! Binding.unify(c, d)
+        
+        do {
+            try a.attempt {
+                try! Binding.unify(a, e)
+                try! Binding.unify(a, c)
+                throw UnificationError("Test")
+            }
+            XCTFail()
+        } catch {
+            a.value = 10
+            e.value = 20
+            
+            XCTAssertEqual(10, a.value)
+            XCTAssertEqual(10, b.value)
+            XCTAssertEqual(20, c.value)
+            XCTAssertEqual(20, d.value)
+            XCTAssertEqual(20, e.value)
+        }
+    }
 }

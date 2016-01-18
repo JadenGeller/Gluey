@@ -7,8 +7,8 @@
 //
 
 /// Base unit of unification
-public class Binding<Value: Equatable> {
-    internal var glue: Glue<Value> {
+public final class Binding<Value: Equatable>: Unifiable {
+    public var glue: Glue<Value> {
         willSet { glue.bindings.remove(self) }
         didSet  { glue.bindings.insert(self) }
     }
@@ -38,14 +38,4 @@ extension Binding: Hashable {
 
 public func ==<Value>(lhs: Binding<Value>, rhs: Binding<Value>) -> Bool {
     return lhs === rhs
-}
-
-// MARK: Unification
-
-extension Binding: Unifiable {
-    
-    /// Binding together multiple bindings
-    public static func unify(lhs: Binding, _ rhs: Binding) throws {
-        try Glue.merge([lhs.glue, rhs.glue])
-    }
 }

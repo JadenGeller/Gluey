@@ -7,7 +7,7 @@
 //
 
 public struct UnificationError: ErrorType {
-    internal init(_ message: String) {
+    public init(_ message: String) {
         self.message = message
     }
     
