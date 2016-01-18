@@ -135,9 +135,9 @@ class GlueyTests: XCTestCase {
     }
     
     func testTerm() {
-        let a = Term.Literal(10)
+        let a = Term.Constant(10)
         let b = Term.Variable(Binding<Int>())
-        let c = Term.Literal(12)
+        let c = Term.Constant(12)
 
         try! Term.unify(a, b)
         XCTAssertEqual(10, b.value)
