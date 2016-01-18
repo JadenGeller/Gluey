@@ -14,6 +14,7 @@
 		4D9C71301C4CDA8C008C8726 /* Gluey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D9C71251C4CDA8C008C8726 /* Gluey.framework */; };
 		4D9C71351C4CDA8C008C8726 /* GlueyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C71341C4CDA8C008C8726 /* GlueyTests.swift */; };
 		4DC710391C4D030000834A0E /* DriedGlue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC710381C4D030000834A0E /* DriedGlue.swift */; };
+		4DC710651C4D0CFD00834A0E /* Term.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC710641C4D0CFD00834A0E /* Term.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +38,7 @@
 		4D9C71341C4CDA8C008C8726 /* GlueyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlueyTests.swift; sourceTree = "<group>"; };
 		4D9C71361C4CDA8C008C8726 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DC710381C4D030000834A0E /* DriedGlue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DriedGlue.swift; path = ../../Sources/DriedGlue.swift; sourceTree = "<group>"; };
+		4DC710641C4D0CFD00834A0E /* Term.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Term.swift; path = ../../Sources/Term.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,10 +82,11 @@
 			isa = PBXGroup;
 			children = (
 				4D09710E1C4CF23F00F176CC /* UnificationError.swift */,
+				4D09710D1C4CF23F00F176CC /* Unifiable.swift */,
 				4D09710C1C4CF23F00F176CC /* Glue.swift */,
 				4DC710381C4D030000834A0E /* DriedGlue.swift */,
 				4D09710B1C4CF23F00F176CC /* Binding.swift */,
-				4D09710D1C4CF23F00F176CC /* Unifiable.swift */,
+				4DC710641C4D0CFD00834A0E /* Term.swift */,
 				4D9C712A1C4CDA8C008C8726 /* Info.plist */,
 			);
 			path = Gluey;
@@ -208,6 +211,7 @@
 				4D0971101C4CF23F00F176CC /* Glue.swift in Sources */,
 				4D0971111C4CF23F00F176CC /* Unifiable.swift in Sources */,
 				4D0971121C4CF23F00F176CC /* UnificationError.swift in Sources */,
+				4DC710651C4D0CFD00834A0E /* Term.swift in Sources */,
 				4D09710F1C4CF23F00F176CC /* Binding.swift in Sources */,
 				4DC710391C4D030000834A0E /* DriedGlue.swift in Sources */,
 			);

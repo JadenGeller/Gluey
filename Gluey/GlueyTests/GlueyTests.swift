@@ -133,4 +133,19 @@ class GlueyTests: XCTestCase {
             XCTAssertEqual(20, e.value)
         }
     }
+    
+    func testTerm() {
+        let a = Term.Literal(10)
+        let b = Term.Variable(Binding<Int>())
+        let c = Term.Literal(12)
+
+        try! Term.unify(a, b)
+        XCTAssertEqual(10, b.value)
+        
+        try! Term.unify(a, a)
+        do {
+            try Term.unify(a, c)
+            XCTFail()
+        } catch { }
+    }
 }
