@@ -15,6 +15,10 @@ public protocol Unifiable {
     func attempt(action: () throws -> ()) throws
 }
 
+public func unify<T: Unifiable>(lhs: T, _ rhs: T) throws {
+    try T.unify(lhs, rhs)
+}
+
 extension Unifiable {
     /// Attempts `action` as an atomic operation on `items` such that each
     /// item's `glue` preserves its initial value if the operation fails.
