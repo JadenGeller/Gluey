@@ -148,4 +148,12 @@ class GlueyTests: XCTestCase {
             XCTFail()
         } catch { }
     }
+    
+    func testRecursiveUnificaiton() {
+        let a = Term.Constant(Term.Variable(Binding<Int>()))
+        let b = Term.Constant(Term.Constant(10))
+        
+        try! Term.unify(a, b)
+        XCTAssertEqual(10, b.value?.value)
+    }
 }

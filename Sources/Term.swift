@@ -50,6 +50,23 @@ extension Term: Unifiable {
     }
 }
 
+// Recursive unification
+extension Term where Value: Unifiable {
+    public static func unify(lhs: Term, _ rhs: Term) throws {
+        switch (lhs, rhs) {
+        case let (.Constant(l), .Constant(r)):
+            try Value.unify(l, r)
+        case let (.Constant(l), .Variable(r)):
+            try r.resolve(l)
+        case let (.Variable(l), .Constant(r)):
+            try l.resolve(r)
+        case let (.Variable(l), .Variable(r)):
+            try Binding.unify(l, r)
+        }
+    }
+}
+
+extension Term: Equatable { }
 /// True if `lhs` and `rhs` are the same value or if they share the same binding
 public func ==<Value: Equatable>(lhs: Term<Value>, rhs: Term<Value>) -> Bool {
     if let leftValue = lhs.value, rightValue = rhs.value {
