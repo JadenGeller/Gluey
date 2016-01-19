@@ -24,6 +24,17 @@ extension Term {
     }
 }
 
+extension Term: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .Constant(let value):
+            return String(value)
+        case .Variable(let binding):
+            return binding.description
+        }
+    }
+}
+
 extension Term: Unifiable {
     /// Unifies `lhs` with `rhs`, otherwise throws a `UnificationError`.
     public static func unify(lhs: Term, _ rhs: Term) throws {

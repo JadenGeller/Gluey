@@ -40,6 +40,16 @@ extension Binding {
     }
 }
 
+extension Binding: CustomStringConvertible {
+    public var description: String {
+        if let value = value {
+            return String(value)
+        } else {
+            return "_B" + String(ObjectIdentifier(self).uintValue)
+        }
+    }
+}
+
 // MARK: Hashing
 
 extension Binding: Hashable {
