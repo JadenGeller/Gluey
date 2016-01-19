@@ -45,7 +45,7 @@ extension Binding: CustomStringConvertible {
         if let value = value {
             return String(value)
         } else {
-            return "_B" + String(ObjectIdentifier(self).uintValue)
+            return "_B" + String(ObjectIdentifier(glue).uintValue)
         }
     }
 }
