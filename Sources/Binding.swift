@@ -62,8 +62,8 @@ extension Binding: Unifiable {
     
     /// Attempts `action` as an atomic operation on `self` such that the
     /// `glue` preserves its initial value if the operation fails.
-    public func attempt(action: () throws -> ()) throws {
-        let dried = DriedGlue(glue: glue)
+    public static func attempt(value: Binding, _ action: () throws -> ()) throws {
+        let dried = DriedGlue(glue: value.glue)
         do {
             try action()
         } catch let error as UnificationError {

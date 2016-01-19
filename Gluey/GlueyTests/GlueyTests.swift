@@ -15,7 +15,7 @@ class GlueyTests: XCTestCase {
         let a = Binding<Int>()
         let b = Binding<Int>()
         
-        try! unify(a, b)
+        try! Binding.unify(a, b)
         a.value = 10
         XCTAssertEqual(10, b.value)
     }
@@ -25,7 +25,7 @@ class GlueyTests: XCTestCase {
         a.value = 10
         let b = Binding<Int>()
         
-        try! unify(a, b)
+        try! Binding.unify(a, b)
         XCTAssertEqual(10, b.value)
     }
     
@@ -34,8 +34,8 @@ class GlueyTests: XCTestCase {
         let b = Binding<Int>()
         let c = Binding<Int>()
         
-        try! unify(a, b)
-        try! unify(b, c)
+        try! Binding.unify(a, b)
+        try! Binding.unify(b, c)
         c.value = 10
         
         XCTAssertEqual(a.value, 10)
@@ -49,7 +49,7 @@ class GlueyTests: XCTestCase {
         a.value = 10
         b.value = 10
         
-        try! unify(a, b)
+        try! Binding.unify(a, b)
     }
     
     func testSuccessfulChainedUnification() {
@@ -60,8 +60,8 @@ class GlueyTests: XCTestCase {
         a.value = 10
         c.value = 10
         
-        try! unify(a, b)
-        try! unify(b, c)
+        try! Binding.unify(a, b)
+        try! Binding.unify(b, c)
     }
     
     func testFailedUnification() {
@@ -72,7 +72,7 @@ class GlueyTests: XCTestCase {
         b.value = 20
         
         do {
-            try unify(a, b)
+            try Binding.unify(a, b)
             XCTFail()
         } catch { }
     }
@@ -85,9 +85,9 @@ class GlueyTests: XCTestCase {
         a.value = 10
         c.value = 20
         
-        try! unify(a, b)
+        try! Binding.unify(a, b)
         do {
-            try unify(b, c)
+            try Binding.unify(b, c)
             XCTFail()
         } catch { }
     }
@@ -99,7 +99,7 @@ class GlueyTests: XCTestCase {
         a.value = 10
         b.value = 10
         
-        try! unify(a, b)
+        try! Binding.unify(a, b)
 
         b.value = 12
         XCTAssertEqual(a.value, 12)
@@ -112,13 +112,13 @@ class GlueyTests: XCTestCase {
         let d = Binding<Int>()
         let e = Binding<Int>()
         
-        try! unify(a, b)
-        try! unify(c, d)
+        try! Binding.unify(a, b)
+        try! Binding.unify(c, d)
         
         do {
-            try a.attempt {
-                try! unify(a, e)
-                try! unify(a, c)
+            try Binding.attempt(a) {
+                try! Binding.unify(a, e)
+                try! Binding.unify(a, c)
                 throw UnificationError("Test")
             }
             XCTFail()
@@ -139,12 +139,12 @@ class GlueyTests: XCTestCase {
         let b = Term.Variable(Binding<Int>())
         let c = Term.Constant(12)
 
-        try! unify(a, b)
+        try! Term.unify(a, b)
         XCTAssertEqual(10, b.value)
         
-        try! unify(a, a)
+        try! Term.unify(a, a)
         do {
-            try unify(a, c)
+            try Term.unify(a, c)
             XCTFail()
         } catch { }
     }
@@ -153,7 +153,24 @@ class GlueyTests: XCTestCase {
         let a = Term.Constant(Term.Variable(Binding<Int>()))
         let b = Term.Constant(Term.Constant(10))
         
-        try! unify(a, b)
+        try! Term.unify(a, b)
         XCTAssertEqual(10, b.value?.value)
+    }
+    
+    func testRecursiveBacktracking() {
+        let a = Term.Constant(Term.Variable(Binding<Int>()))
+        let b = Term.Constant(Term.Constant(10))
+        let c = Term.Constant(Term.Constant(20))
+        let d = Term.Constant(Term.Variable(Binding<Int>()))
+        
+        try! Term.unify(a, b)
+        do {
+            try Term.attempt(a) {
+                try Term.unify(b, c)
+            }
+        } catch {
+            try! Term.unify(a, d)
+        }
+        XCTAssertEqual(10, d.value?.value)
     }
 }

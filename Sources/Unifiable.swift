@@ -12,20 +12,12 @@ public protocol Unifiable {
     
     /// Attempts `action` as an atomic operation on `self` such that the
     /// `glue` preserves its initial value if the operation fails.
-    func attempt(action: () throws -> ()) throws
+    static func attempt(value: Self, _ action: () throws -> ()) throws
 }
 
-public func unify<T: Unifiable>(lhs: T, _ rhs: T) throws {
-    try T.unify(lhs, rhs)
-}
-
-extension Unifiable {
-    /// Attempts `action` as an atomic operation on `items` such that each
-    /// item's `glue` preserves its initial value if the operation fails.
-    public static func attempt(with items: [Self], action: () throws -> ()) throws {
-        let lambda = items.reduce({}, combine: { (lambda: () throws -> (), item: Self) in
-            { try item.attempt(lambda) }
-        })
-        try lambda()
-    }
-}
+// Note that attempt is a static function so that it can be overloaded in a
+// conditional extension. I'm not sure if this is intended behavior or a
+// limitation of Swift. Also note that a convenience attempt that takes in
+// an array of terms cannot be defined since it would never choose a 
+// conditional overload (because of how Swift generic work), and thus will
+// cause unexpected, silent failures with recursive unification types.

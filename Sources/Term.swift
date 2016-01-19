@@ -41,12 +41,12 @@ extension Term: Unifiable {
         }
     }
     
-    public func attempt(action: () throws -> ()) throws {
-        switch self {
+    public static func attempt(value: Term, _ action: () throws -> ()) throws {
+        switch value {
         case .Constant:
             try action()
         case .Variable(let binding):
-            try binding.attempt(action)
+            try Binding.attempt(binding, action)
         }
     }
 }
@@ -63,6 +63,15 @@ extension Term where Value: Unifiable {
             try l.resolve(r)
         case let (.Variable(l), .Variable(r)):
             try Binding.unify(l, r)
+        }
+    }
+    
+    public static func attempt(value: Term, _ action: () throws -> ()) throws {
+        switch value {
+        case .Constant(let inner):
+            try Value.attempt(inner, action)
+        case .Variable(let binding):
+            try Binding.attempt(binding, action)
         }
     }
 }
