@@ -48,6 +48,7 @@ extension Binding: Hashable {
     }
 }
 
+// Reference identity
 public func ==<Value>(lhs: Binding<Value>, rhs: Binding<Value>) -> Bool {
     return lhs === rhs
 }

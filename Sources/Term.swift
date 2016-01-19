@@ -49,3 +49,14 @@ extension Term: Unifiable {
         }
     }
 }
+
+/// True if `lhs` and `rhs` are the same value or if they share the same binding
+public func ==<Value: Equatable>(lhs: Term<Value>, rhs: Term<Value>) -> Bool {
+    if let leftValue = lhs.value, rightValue = rhs.value {
+        return leftValue == rightValue
+    } else if case let .Variable(leftBinding) = lhs, case let .Variable(rightBinding) = rhs {
+        return leftBinding.glue === rightBinding.glue
+    } else {
+        return false
+    }
+}
