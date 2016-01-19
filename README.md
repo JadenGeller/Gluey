@@ -7,20 +7,20 @@ let a = Binding<Int>()
 let b = Binding<Int>()
 let c = Binding<Int>()
 
-try unify(a, b) // all good
-try unify(b, c) // we're cool
+try Binding.unify(a, b) // all good
+try Binding.unify(b, c) // we're cool
 
 a.value = 10
 print(c.value) // -> 10
 
 let d = Binding<Int>()
-try unify(a, d) // no problem
+try Binding.unify(a, d) // no problem
 print(d.value) // -> 10
 // Since d.value = nil, it will take on a's value.
 
 let e = Binding<Int>()
 e.value = 20
-try unify(a, e) // UNIFICATION ERROR!!!
+try Binding.unify(a, e) // UNIFICATION ERROR!!!
 // Since a.value = 10 and b.value = 20, they cannot be unified.
 ```
 
@@ -28,11 +28,11 @@ Gluey also defines a `Term<Value>` enum with cases `Variable(Binding<Value>)` an
 ```swift
 let a = Term.Constant(10)
 let b = Term.Variable(Binding<Int>())
-try unify(a, b)
+try Term.unify(a, b)
 print(b.value) // -> 10
 
 let c = Term.Constant(Term.Constant(10))
 let d = Term.Constant(Term.Variable(Binding<Int>()))
-try unify(c, d)
+try Term.unify(c, d)
 print(d.value?.value) // -> 10
 ```
