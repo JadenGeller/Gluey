@@ -18,7 +18,7 @@ public protocol Unifiable {
 extension Unifiable {
     /// Attempts `action` as an atomic operation on `items` such that each
     /// item's `glue` preserves its initial value if the operation fails.
-    static func attempt(with items: [Self], action: () throws -> ()) throws {
+    public static func attempt(with items: [Self], action: () throws -> ()) throws {
         let lambda = items.reduce({}, combine: { (lambda: () throws -> (), item: Self) in
             { try item.attempt(lambda) }
         })
