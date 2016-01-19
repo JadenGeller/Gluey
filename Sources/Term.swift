@@ -6,7 +6,8 @@
 //  Copyright © 2016 Jaden Geller. All rights reserved.
 //
 
-// Unification type that wraps `Binding` for better use with literal values
+/// Unification type that allows representation of variables and constants,
+/// recursively unifying constant values.
 public enum Term<Value: Equatable> {
     case Constant(Value)
     case Variable(Binding<Value>)
