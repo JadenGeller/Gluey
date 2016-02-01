@@ -7,15 +7,19 @@
 //
 
 /// Base unit of unification
-public final class Binding<Value: Equatable> {
+public class Binding<Value: Equatable> {
     public var glue: Glue<Value> {
         willSet { glue.bindings.remove(self) }
         didSet  { glue.bindings.insert(self) }
     }
     
-    public init() {
-        glue = Glue()
-        glue.bindings.insert(self)
+    internal init(glue: Glue<Value>) {
+        self.glue = glue
+        self.glue.bindings.insert(self)
+    }
+    
+    public convenience init() {
+        self.init(glue: Glue())
     }
     
     public var value: Value? {

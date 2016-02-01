@@ -40,3 +40,13 @@ extension Glue {
         }
     }
 }
+
+extension Glue: Hashable {
+    public var hashValue: Int {
+        return ObjectIdentifier(self).hashValue
+    }
+}
+
+public func ==<Value: Equatable>(lhs: Glue<Value>, rhs: Glue<Value>) -> Bool {
+    return lhs === rhs
+}
