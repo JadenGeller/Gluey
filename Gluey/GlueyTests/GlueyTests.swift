@@ -175,23 +175,44 @@ class GlueyTests: XCTestCase {
     }
     
     func testCopy() {
-        var a = Term.Variable(Binding<Int>())
-        var b = Term.Variable(Binding<Int>())
+        let a = Term.Variable(Binding<Int>())
+        let b = Term.Variable(Binding<Int>())
         try! Term.unify(a, b)
-        let context = CopyContext<Int>()
-        var aa = a.copy(withContext: context)
-        var bb = b.copy(withContext: context)
+        let context = CopyContext()
+        let aa = Term.copy(a, withContext: context)
+        let bb = Term.copy(b, withContext: context)
         
-        a.value = 1
+        try! Term.unify(a, Term.Constant(1))
         XCTAssertEqual(1, b.value)
         XCTAssertEqual(1, a.value)
         XCTAssertEqual(nil, aa.value)
         XCTAssertEqual(nil, bb.value)
         
-        aa.value = 2
+        try! Term.unify(aa, Term.Constant(2))
         XCTAssertEqual(1, b.value)
         XCTAssertEqual(1, a.value)
         XCTAssertEqual(2, aa.value)
         XCTAssertEqual(2, bb.value)
+    }
+    
+    func testRecursiveCopy() {
+        let a = Term.Constant(Term.Variable(Binding<Int>()))
+        let b = Term.Constant(Term.Variable(Binding<Int>()))
+        try! Term.unify(a, b)
+        let context = CopyContext()
+        let aa = Term.copy(a, withContext: context)
+        let bb = Term.copy(b, withContext: context)
+        
+        try! Term.unify(a, Term.Constant(Term.Constant(1)))
+        XCTAssertEqual(1, b.value!.value)
+        XCTAssertEqual(1, a.value!.value)
+        XCTAssertEqual(nil, aa.value!.value)
+        XCTAssertEqual(nil, bb.value!.value)
+        
+        try! Term.unify(aa, Term.Constant(Term.Constant(2)))
+        XCTAssertEqual(1, b.value!.value)
+        XCTAssertEqual(1, a.value!.value)
+        XCTAssertEqual(2, aa.value!.value)
+        XCTAssertEqual(2, bb.value!.value)
     }
 }

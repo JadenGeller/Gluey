@@ -7,7 +7,7 @@
 //
 
 /// Holds together bindings and manages their value
-public class Glue<Value: Equatable> {
+public final class Glue<Value: Equatable> {
     internal var value: Value?
     internal var bindings: Set<Binding<Value>> = []
     
@@ -41,12 +41,3 @@ extension Glue {
     }
 }
 
-extension Glue: Hashable {
-    public var hashValue: Int {
-        return ObjectIdentifier(self).hashValue
-    }
-}
-
-public func ==<Value: Equatable>(lhs: Glue<Value>, rhs: Glue<Value>) -> Bool {
-    return lhs === rhs
-}

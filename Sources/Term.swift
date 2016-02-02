@@ -23,14 +23,6 @@ extension Term {
                 return binding.value
             }
         }
-        set {
-            switch self {
-            case .Constant:
-                fatalError("Cannot set the value of a literal term.")
-            case .Variable(let binding):
-                return binding.value = newValue
-            }
-        }
     }
 }
 
@@ -106,5 +98,30 @@ public func ==<Value: Equatable>(lhs: Term<Value>, rhs: Term<Value>) -> Bool {
         return leftBinding.glue === rightBinding.glue
     } else {
         return false
+    }
+}
+
+// MARK: Copying
+
+extension Term: ContextCopyable {
+    public static func copy(this: Term, withContext context: CopyContext) -> Term {
+        switch this {
+        case .Constant(let value):
+            return .Constant(value)
+        case .Variable(let binding):
+            return .Variable(Binding.copy(binding, withContext: context))
+        }
+    }
+}
+
+// Recursive copying
+extension Term where Value: ContextCopyable {
+    public static func copy(this: Term, withContext context: CopyContext) -> Term {
+        switch this {
+        case .Constant(let value):
+            return .Constant(Value.copy(value, withContext: context))
+        case .Variable(let binding):
+            return .Variable(Binding.copy(binding, withContext: context))
+        }
     }
 }

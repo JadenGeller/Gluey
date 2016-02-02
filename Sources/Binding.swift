@@ -7,13 +7,13 @@
 //
 
 /// Base unit of unification
-public class Binding<Value: Equatable> {
+public final class Binding<Value: Equatable> {
     public var glue: Glue<Value> {
         willSet { glue.bindings.remove(self) }
         didSet  { glue.bindings.insert(self) }
     }
     
-    internal init(glue: Glue<Value>) {
+    private init(glue: Glue<Value>) {
         self.glue = glue
         self.glue.bindings.insert(self)
     }
@@ -84,5 +84,13 @@ extension Binding: Unifiable {
             Glue.restore(dried)
             throw error // rethrow!
         }
+    }
+}
+
+// MARK: Copying
+
+extension Binding: ContextCopyable {
+    public static func copy(this: Binding, withContext context: CopyContext) -> Binding {
+        return Binding(glue: context.copy(this.glue))
     }
 }
