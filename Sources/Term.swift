@@ -15,11 +15,21 @@ public enum Term<Value: Equatable> {
 
 extension Term {
     public var value: Value? {
-        switch self {
-        case .Constant(let literalValue):
-            return literalValue
-        case .Variable(let binding):
-            return binding.value
+        get {
+            switch self {
+            case .Constant(let literalValue):
+                return literalValue
+            case .Variable(let binding):
+                return binding.value
+            }
+        }
+        set {
+            switch self {
+            case .Constant:
+                fatalError("Cannot set the value of a literal term.")
+            case .Variable(let binding):
+                return binding.value = newValue
+            }
         }
     }
 }

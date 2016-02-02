@@ -173,4 +173,25 @@ class GlueyTests: XCTestCase {
         }
         XCTAssertEqual(10, d.value?.value)
     }
+    
+    func testCopy() {
+        var a = Term.Variable(Binding<Int>())
+        var b = Term.Variable(Binding<Int>())
+        try! Term.unify(a, b)
+        let context = CopyContext<Int>()
+        var aa = a.copy(withContext: context)
+        var bb = b.copy(withContext: context)
+        
+        a.value = 1
+        XCTAssertEqual(1, b.value)
+        XCTAssertEqual(1, a.value)
+        XCTAssertEqual(nil, aa.value)
+        XCTAssertEqual(nil, bb.value)
+        
+        aa.value = 2
+        XCTAssertEqual(1, b.value)
+        XCTAssertEqual(1, a.value)
+        XCTAssertEqual(2, aa.value)
+        XCTAssertEqual(2, bb.value)
+    }
 }
