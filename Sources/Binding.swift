@@ -33,13 +33,23 @@ public final class Binding<Value: Equatable> {
 }
 
 extension Binding {
-    public func resolve(newValue: Value) throws {
-        if let value = value {
+    public static func resolve(binding: Binding, withValue newValue: Value) throws {
+        if let value = binding.value {
             guard value == newValue else {
                 throw UnificationError("Cannot resolve binding already bound to a different value.")
             }
         } else {
-            value = newValue
+            binding.value = newValue
+        }
+    }
+}
+
+extension Binding where Value: Unifiable {
+    public static func resolve(binding: Binding, withValue newValue: Value) throws {
+        if let value = binding.value {
+            try Value.unify(value, newValue)
+        } else {
+            binding.value = newValue
         }
     }
 }

@@ -46,9 +46,9 @@ extension Term: Unifiable {
                 throw UnificationError("Cannot unify literals of different values.")
             }
         case let (.Constant(l), .Variable(r)):
-            try r.resolve(l)
+            try Binding.resolve(r, withValue: l)
         case let (.Variable(l), .Constant(r)):
-            try l.resolve(r)
+            try Binding.resolve(l, withValue: r)
         case let (.Variable(l), .Variable(r)):
             try Binding.unify(l, r)
         }
@@ -71,9 +71,9 @@ extension Term where Value: Unifiable {
         case let (.Constant(l), .Constant(r)):
             try Value.unify(l, r)
         case let (.Constant(l), .Variable(r)):
-            try r.resolve(l)
+            try Binding.resolve(r, withValue: l)
         case let (.Variable(l), .Constant(r)):
-            try l.resolve(r)
+            try Binding.resolve(l, withValue: r)
         case let (.Variable(l), .Variable(r)):
             try Binding.unify(l, r)
         }
