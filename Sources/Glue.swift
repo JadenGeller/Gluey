@@ -6,8 +6,9 @@
 //  Copyright © 2016 Jaden Geller. All rights reserved.
 //
 
-/// Holds together bindings and manages their value
-public final class Glue<Element: Equatable> {
+/// Tracks which bindings are unified together and stores the value
+/// shared between these bindings.
+internal final class Glue<Element: Equatable> {
     internal var value: Element?
     internal var bindings: Set<Binding<Element>> = []
     
@@ -18,8 +19,10 @@ public final class Glue<Element: Equatable> {
 }
 
 extension Glue {
-    /// Unified value of multiple glue values or throw if unification is not possible
-    public static func unifiedValue(glue: [Glue]) throws -> Element? {
+    /// If all `Glue` in the array can be unified without value conflicts, returns
+    /// the resulting value or `nil` if no `Glue` has a value. If a conflict exists,
+    /// throws a `UnificationError`.
+    private static func unifiedValue(glue: [Glue]) throws -> Element? {
         // If glue values conflict, throw unification error.
         // Otherwise, return the unified value.
         return try glue.map{ $0.value }.reduce(nil) {
@@ -30,8 +33,10 @@ extension Glue {
         }
     }
     
-    // Merge multiple glue and update the bindings
-    public static func merge(glue: [Glue]) throws {
+    /// Merge all `Glue` in the array and update each's bindings to reflect their
+    /// newly merged `Glue`. If multiple `Glue` have values set and they disagree,
+    /// throws a `UnfiicationError`.
+    internal static func merge(glue: [Glue]) throws {
         let merged = try Glue(value: unifiedValue(glue))
         
         // Update each binding to use this glue.

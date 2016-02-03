@@ -6,9 +6,13 @@
 //  Copyright © 2016 Jaden Geller. All rights reserved.
 //
 
-/// Base unit of unification
+/// The most basic unifiable type. Stores an `Element` such that,
+/// on unification, both `Bindings` refer to this same `Element`.
+/// Note that this element may be set to `nil` to indicate that no
+/// value has been determined.
 public final class Binding<Element: Equatable> {
-    public var glue: Glue<Element> {
+    /// The shared state.
+    internal var glue: Glue<Element> {
         willSet { glue.bindings.remove(self) }
         didSet  { glue.bindings.insert(self) }
     }
@@ -18,10 +22,14 @@ public final class Binding<Element: Equatable> {
         self.glue.bindings.insert(self)
     }
     
-    public convenience init() {
+    /// Constructs a new unbound `Glue`.
+    public convenience init(value: Element? = nil) {
         self.init(glue: Glue())
+        self.value = value
     }
     
+    /// The `value` stored by this `Binding`, otherwise `nil` if it
+    /// is not yet determined.
     public var value: Element? {
         get {
             return glue.value

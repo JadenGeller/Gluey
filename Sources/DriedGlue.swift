@@ -6,7 +6,8 @@
 //  Copyright © 2016 Jaden Geller. All rights reserved.
 //
 
-public struct DriedGlue<Element: Equatable> {
+/// A snapshot of a previous `Glue` value that can be restored at a later date.
+internal struct DriedGlue<Element: Equatable> {
     internal var value: Element?
     internal var bindings: Set<Binding<Element>> = []
     
@@ -18,7 +19,9 @@ public struct DriedGlue<Element: Equatable> {
 }
 
 extension Glue {
-    public static func restore(dried: DriedGlue<Element>) {
+    /// Restore by creating a new `Glue` value from the saved stated, and updating
+    /// all saved bindings to utilize this `Glue`.
+    internal static func restore(dried: DriedGlue<Element>) {
         let restored = Glue(value: dried.value)
         
         for binding in dried.bindings {
