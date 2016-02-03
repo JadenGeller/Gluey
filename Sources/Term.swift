@@ -1,5 +1,5 @@
 //
-//  Term.swift
+//  Value.swift
 //  Gluey
 //
 //  Created by Jaden Geller on 1/18/16.
@@ -8,12 +8,12 @@
 
 /// Unification type that allows representation of variables and constants,
 /// recursively unifying constant values.
-public enum Term<Element: Equatable> {
+public enum Value<Element: Equatable> {
     case Constant(Element)
     case Variable(Binding<Element>)
 }
 
-extension Term {
+extension Value {
     public var value: Element? {
         get {
             switch self {
@@ -26,7 +26,7 @@ extension Term {
     }
 }
 
-extension Term: CustomStringConvertible {
+extension Value: CustomStringConvertible {
     public var description: String {
         switch self {
         case .Constant(let value):
@@ -37,9 +37,9 @@ extension Term: CustomStringConvertible {
     }
 }
 
-extension Term: Unifiable {
+extension Value: Unifiable {
     /// Unifies `lhs` with `rhs`, otherwise throws a `UnificationError`.
-    public static func unify(lhs: Term, _ rhs: Term) throws {
+    public static func unify(lhs: Value, _ rhs: Value) throws {
         switch (lhs, rhs) {
         case let (.Constant(l), .Constant(r)):
             guard l == r else {
@@ -54,7 +54,7 @@ extension Term: Unifiable {
         }
     }
     
-    public static func attempt(value: Term, _ action: () throws -> ()) throws {
+    public static func attempt(value: Value, _ action: () throws -> ()) throws {
         switch value {
         case .Constant:
             try action()
@@ -65,8 +65,8 @@ extension Term: Unifiable {
 }
 
 // Recursive unification
-extension Term where Element: Unifiable {
-    public static func unify(lhs: Term, _ rhs: Term) throws {
+extension Value where Element: Unifiable {
+    public static func unify(lhs: Value, _ rhs: Value) throws {
         switch (lhs, rhs) {
         case let (.Constant(l), .Constant(r)):
             try Element.unify(l, r)
@@ -79,7 +79,7 @@ extension Term where Element: Unifiable {
         }
     }
     
-    public static func attempt(value: Term, _ action: () throws -> ()) throws {
+    public static func attempt(value: Value, _ action: () throws -> ()) throws {
         switch value {
         case .Constant(let inner):
             try Element.attempt(inner, action)
@@ -89,9 +89,9 @@ extension Term where Element: Unifiable {
     }
 }
 
-extension Term: Equatable { }
+extension Value: Equatable { }
 /// True if `lhs` and `rhs` are the same value or if they share the same binding
-public func ==<Element: Equatable>(lhs: Term<Element>, rhs: Term<Element>) -> Bool {
+public func ==<Element: Equatable>(lhs: Value<Element>, rhs: Value<Element>) -> Bool {
     if let leftValue = lhs.value, rightValue = rhs.value {
         return leftValue == rightValue
     } else if case let .Variable(leftBinding) = lhs, case let .Variable(rightBinding) = rhs {
@@ -103,8 +103,8 @@ public func ==<Element: Equatable>(lhs: Term<Element>, rhs: Term<Element>) -> Bo
 
 // MARK: Copying
 
-extension Term: ContextCopyable {
-    public static func copy(this: Term, withContext context: CopyContext) -> Term {
+extension Value: ContextCopyable {
+    public static func copy(this: Value, withContext context: CopyContext) -> Value {
         switch this {
         case .Constant(let value):
             return .Constant(value)
@@ -115,8 +115,8 @@ extension Term: ContextCopyable {
 }
 
 // Recursive copying
-extension Term where Element: ContextCopyable {
-    public static func copy(this: Term, withContext context: CopyContext) -> Term {
+extension Value where Element: ContextCopyable {
+    public static func copy(this: Value, withContext context: CopyContext) -> Value {
         switch this {
         case .Constant(let value):
             return .Constant(Element.copy(value, withContext: context))

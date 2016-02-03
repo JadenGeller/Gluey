@@ -135,60 +135,60 @@ class GlueyTests: XCTestCase {
     }
     
     func testTerm() {
-        let a = Term.Constant(10)
-        let b = Term.Variable(Binding<Int>())
-        let c = Term.Constant(12)
+        let a = Value.Constant(10)
+        let b = Value.Variable(Binding<Int>())
+        let c = Value.Constant(12)
 
-        try! Term.unify(a, b)
+        try! Value.unify(a, b)
         XCTAssertEqual(10, b.value)
         
-        try! Term.unify(a, a)
+        try! Value.unify(a, a)
         do {
-            try Term.unify(a, c)
+            try Value.unify(a, c)
             XCTFail()
         } catch { }
     }
     
     func testRecursiveUnificaiton() {
-        let a = Term.Constant(Term.Variable(Binding<Int>()))
-        let b = Term.Constant(Term.Constant(10))
+        let a = Value.Constant(Value.Variable(Binding<Int>()))
+        let b = Value.Constant(Value.Constant(10))
         
-        try! Term.unify(a, b)
+        try! Value.unify(a, b)
         XCTAssertEqual(10, b.value?.value)
     }
     
     func testRecursiveBacktracking() {
-        let a = Term.Constant(Term.Variable(Binding<Int>()))
-        let b = Term.Constant(Term.Constant(10))
-        let c = Term.Constant(Term.Constant(20))
-        let d = Term.Constant(Term.Variable(Binding<Int>()))
+        let a = Value.Constant(Value.Variable(Binding<Int>()))
+        let b = Value.Constant(Value.Constant(10))
+        let c = Value.Constant(Value.Constant(20))
+        let d = Value.Constant(Value.Variable(Binding<Int>()))
         
-        try! Term.unify(a, b)
+        try! Value.unify(a, b)
         do {
-            try Term.attempt(a) {
-                try Term.unify(b, c)
+            try Value.attempt(a) {
+                try Value.unify(b, c)
             }
         } catch {
-            try! Term.unify(a, d)
+            try! Value.unify(a, d)
         }
         XCTAssertEqual(10, d.value?.value)
     }
     
     func testCopy() {
-        let a = Term.Variable(Binding<Int>())
-        let b = Term.Variable(Binding<Int>())
-        try! Term.unify(a, b)
+        let a = Value.Variable(Binding<Int>())
+        let b = Value.Variable(Binding<Int>())
+        try! Value.unify(a, b)
         let context = CopyContext()
-        let aa = Term.copy(a, withContext: context)
-        let bb = Term.copy(b, withContext: context)
+        let aa = Value.copy(a, withContext: context)
+        let bb = Value.copy(b, withContext: context)
         
-        try! Term.unify(a, Term.Constant(1))
+        try! Value.unify(a, Value.Constant(1))
         XCTAssertEqual(1, b.value)
         XCTAssertEqual(1, a.value)
         XCTAssertEqual(nil, aa.value)
         XCTAssertEqual(nil, bb.value)
         
-        try! Term.unify(aa, Term.Constant(2))
+        try! Value.unify(aa, Value.Constant(2))
         XCTAssertEqual(1, b.value)
         XCTAssertEqual(1, a.value)
         XCTAssertEqual(2, aa.value)
@@ -196,20 +196,20 @@ class GlueyTests: XCTestCase {
     }
     
     func testRecursiveCopy() {
-        let a = Term.Constant(Term.Variable(Binding<Int>()))
-        let b = Term.Constant(Term.Variable(Binding<Int>()))
-        try! Term.unify(a, b)
+        let a = Value.Constant(Value.Variable(Binding<Int>()))
+        let b = Value.Constant(Value.Variable(Binding<Int>()))
+        try! Value.unify(a, b)
         let context = CopyContext()
-        let aa = Term.copy(a, withContext: context)
-        let bb = Term.copy(b, withContext: context)
+        let aa = Value.copy(a, withContext: context)
+        let bb = Value.copy(b, withContext: context)
         
-        try! Term.unify(a, Term.Constant(Term.Constant(1)))
+        try! Value.unify(a, Value.Constant(Value.Constant(1)))
         XCTAssertEqual(1, b.value!.value)
         XCTAssertEqual(1, a.value!.value)
         XCTAssertEqual(nil, aa.value!.value)
         XCTAssertEqual(nil, bb.value!.value)
         
-        try! Term.unify(aa, Term.Constant(Term.Constant(2)))
+        try! Value.unify(aa, Value.Constant(Value.Constant(2)))
         XCTAssertEqual(1, b.value!.value)
         XCTAssertEqual(1, a.value!.value)
         XCTAssertEqual(2, aa.value!.value)
