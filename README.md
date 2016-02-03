@@ -43,8 +43,9 @@ let c = Value.Constant(Value.Constant(10))
 let d = Value.Constant(Value.Variable(Binding<Int>()))
 try Value.unify(c, d)
 print(d.value?.value) // -> 10
+```
 
 ## Documentation
 
 Still confused? Read more about Gluey [here](http://jadengeller.github.io/Gluey/docs/index.html)! Or tweet at [me](https://twitter.com/jadengeller) if you still need some help. :)
-```
+
