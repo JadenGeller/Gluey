@@ -18,6 +18,6 @@ public protocol Unifiable {
 // Note that attempt is a static function so that it can be overloaded in a
 // conditional extension. I'm not sure if this is intended behavior or a
 // limitation of Swift. Also note that a convenience attempt that takes in
-// an array of terms cannot be defined since it would never choose a 
+// an array of values cannot be defined since it would never choose a 
 // conditional overload (because of how Swift generic work), and thus will
 // cause unexpected, silent failures with recursive unification types.

@@ -134,7 +134,7 @@ class GlueyTests: XCTestCase {
         }
     }
     
-    func testTerm() {
+    func testValue() {
         let a = Value.Constant(10)
         let b = Value.Variable(Binding<Int>())
         let c = Value.Constant(12)
