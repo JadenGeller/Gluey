@@ -67,6 +67,7 @@ extension Binding where Element: Unifiable {
 }
 
 extension Binding: CustomStringConvertible {
+    /// A textual representation of the value or the binding if no value exists.
     public var description: String {
         if let value = value {
             return String(value)

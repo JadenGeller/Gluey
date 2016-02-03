@@ -10,7 +10,9 @@
 /// and constant values. May be used as a building block to build tree-like
 /// unification types.
 public enum Value<Element: Equatable> {
+    /// A value that cannot be changed.
     case Constant(Element)
+    /// A value that is determined by unification.
     case Variable(Binding<Element>)
 }
 
@@ -29,6 +31,7 @@ extension Value {
 }
 
 extension Value: CustomStringConvertible {
+    /// A textual representation of the value or the binding if no value exists.
     public var description: String {
         switch self {
         case .Constant(let value):
