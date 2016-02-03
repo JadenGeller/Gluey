@@ -41,6 +41,8 @@ public final class Binding<Element: Equatable> {
 }
 
 extension Binding {
+    /// Associates the `binding` with the `newValue` if possible, throwing a `UnificationError`
+    /// if the `binding` is already associated with a different value.
     public static func resolve(binding: Binding, withValue newValue: Element) throws {
         if let value = binding.value {
             guard value == newValue else {
@@ -53,6 +55,8 @@ extension Binding {
 }
 
 extension Binding where Element: Unifiable {
+    /// If `binding` has no value set, its value is set to `newValue`. Otherwise, the current
+    /// `value` is unified with `newValue`.
     public static func resolve(binding: Binding, withValue newValue: Element) throws {
         if let value = binding.value {
             try Element.unify(value, newValue)
@@ -88,12 +92,13 @@ public func ==<Element>(lhs: Binding<Element>, rhs: Binding<Element>) -> Bool {
 // MARK: Unifiable
 
 extension Binding: Unifiable {
+    /// Unifies `lhs` with `rhs`, otherwise throws a `UnificationError`.
     public static func unify(lhs: Binding, _ rhs: Binding) throws {
         try Glue.merge([lhs.glue, rhs.glue])
     }
     
-    /// Attempts `action` as an atomic operation on `self` such that the
-    /// `glue` preserves its initial value if the operation fails.
+    /// Performs `action` as an operation on `self` such that the
+    /// `self` preserves its initial `glue` value if the operation fails.
     public static func attempt(value: Binding, _ action: () throws -> ()) throws {
         let dried = DriedGlue(glue: value.glue)
         do {
@@ -108,6 +113,8 @@ extension Binding: Unifiable {
 // MARK: Copying
 
 extension Binding: ContextCopyable {
+    /// Copies `this` reusing any substructure that has already been copied within
+    /// this context, and storing any newly generated substructure into the context.
     public static func copy(this: Binding, withContext context: CopyContext) -> Binding {
         return Binding(glue: context.copy(this.glue))
     }

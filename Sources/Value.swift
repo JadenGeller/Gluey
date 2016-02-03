@@ -6,14 +6,16 @@
 //  Copyright © 2016 Jaden Geller. All rights reserved.
 //
 
-/// Unification type that allows representation of variables and constants,
-/// recursively unifying constant values.
+/// Recursively unifiable type that allows for representation of both variables
+/// and constant values. May be used as a building block to build tree-like
+/// unification types.
 public enum Value<Element: Equatable> {
     case Constant(Element)
     case Variable(Binding<Element>)
 }
 
 extension Value {
+    /// The current value otherwise `nil` if it is undetermined.
     public var value: Element? {
         get {
             switch self {
@@ -54,6 +56,8 @@ extension Value: Unifiable {
         }
     }
     
+    /// Performs `action` as an operation on `self` such that the
+    /// `self` preserves its initial `glue` value if the operation fails.
     public static func attempt(value: Value, _ action: () throws -> ()) throws {
         switch value {
         case .Constant:
@@ -66,6 +70,7 @@ extension Value: Unifiable {
 
 // Recursive unification
 extension Value where Element: Unifiable {
+    /// Recursively unifies `lhs` with `rhs`, otherwise throws a `UnificationError`.
     public static func unify(lhs: Value, _ rhs: Value) throws {
         switch (lhs, rhs) {
         case let (.Constant(l), .Constant(r)):
@@ -79,6 +84,8 @@ extension Value where Element: Unifiable {
         }
     }
     
+    /// Performs `action` as an operation on `self` such that the
+    /// `self` preserves its initial `glue` value if the operation fails.
     public static func attempt(value: Value, _ action: () throws -> ()) throws {
         switch value {
         case .Constant(let inner):
@@ -90,7 +97,7 @@ extension Value where Element: Unifiable {
 }
 
 extension Value: Equatable { }
-/// True if `lhs` and `rhs` are the same value or if they share the same binding
+/// True if `lhs` and `rhs` are the same value or if they are bound together.
 public func ==<Element: Equatable>(lhs: Value<Element>, rhs: Value<Element>) -> Bool {
     if let leftValue = lhs.value, rightValue = rhs.value {
         return leftValue == rightValue
@@ -104,6 +111,8 @@ public func ==<Element: Equatable>(lhs: Value<Element>, rhs: Value<Element>) -> 
 // MARK: Copying
 
 extension Value: ContextCopyable {
+    /// Copies `this` reusing any substructure that has already been copied within
+    /// this context, and storing any newly generated substructure into the context.
     public static func copy(this: Value, withContext context: CopyContext) -> Value {
         switch this {
         case .Constant(let value):
@@ -116,6 +125,8 @@ extension Value: ContextCopyable {
 
 // Recursive copying
 extension Value where Element: ContextCopyable {
+    /// Copies `this` reusing any substructure that has already been copied within
+    /// this context, and storing any newly generated substructure into the context.
     public static func copy(this: Value, withContext context: CopyContext) -> Value {
         switch this {
         case .Constant(let value):
