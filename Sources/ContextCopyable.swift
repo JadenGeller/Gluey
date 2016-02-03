@@ -13,7 +13,7 @@ public protocol ContextCopyable {
 private struct AnyGlue: Hashable {
     let glue: AnyObject
     
-    init<Value: Equatable>(_ glue: Glue<Value>) {
+    init<Element: Equatable>(_ glue: Glue<Element>) {
         self.glue = glue
     }
     
@@ -30,9 +30,9 @@ public final class CopyContext {
     
     public init() { }
     
-    public func copy<Value: Equatable>(oldValue: Glue<Value>) -> Glue<Value> {
+    public func copy<Element: Equatable>(oldValue: Glue<Element>) -> Glue<Element> {
         if let newValue = backing[AnyGlue(oldValue)] {
-            return newValue.glue as! Glue<Value>
+            return newValue.glue as! Glue<Element>
         } else {
             let newValue = Glue(value: oldValue.value)
             backing[AnyGlue(oldValue)] = AnyGlue(newValue)

@@ -6,19 +6,19 @@
 //  Copyright © 2016 Jaden Geller. All rights reserved.
 //
 
-public struct DriedGlue<Value: Equatable> {
-    internal var value: Value?
-    internal var bindings: Set<Binding<Value>> = []
+public struct DriedGlue<Element: Equatable> {
+    internal var value: Element?
+    internal var bindings: Set<Binding<Element>> = []
     
     /// Construct a `Glue` with no bindings that's bound to `value`.
-    internal init(glue: Glue<Value>) {
+    internal init(glue: Glue<Element>) {
         self.value = glue.value
         self.bindings = glue.bindings
     }
 }
 
 extension Glue {
-    public static func restore(dried: DriedGlue<Value>) {
+    public static func restore(dried: DriedGlue<Element>) {
         let restored = Glue(value: dried.value)
         
         for binding in dried.bindings {

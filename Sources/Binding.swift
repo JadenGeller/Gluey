@@ -7,13 +7,13 @@
 //
 
 /// Base unit of unification
-public final class Binding<Value: Equatable> {
-    public var glue: Glue<Value> {
+public final class Binding<Element: Equatable> {
+    public var glue: Glue<Element> {
         willSet { glue.bindings.remove(self) }
         didSet  { glue.bindings.insert(self) }
     }
     
-    private init(glue: Glue<Value>) {
+    private init(glue: Glue<Element>) {
         self.glue = glue
         self.glue.bindings.insert(self)
     }
@@ -22,7 +22,7 @@ public final class Binding<Value: Equatable> {
         self.init(glue: Glue())
     }
     
-    public var value: Value? {
+    public var value: Element? {
         get {
             return glue.value
         }
@@ -33,7 +33,7 @@ public final class Binding<Value: Equatable> {
 }
 
 extension Binding {
-    public static func resolve(binding: Binding, withValue newValue: Value) throws {
+    public static func resolve(binding: Binding, withValue newValue: Element) throws {
         if let value = binding.value {
             guard value == newValue else {
                 throw UnificationError("Cannot resolve binding already bound to a different value.")
@@ -44,10 +44,10 @@ extension Binding {
     }
 }
 
-extension Binding where Value: Unifiable {
-    public static func resolve(binding: Binding, withValue newValue: Value) throws {
+extension Binding where Element: Unifiable {
+    public static func resolve(binding: Binding, withValue newValue: Element) throws {
         if let value = binding.value {
-            try Value.unify(value, newValue)
+            try Element.unify(value, newValue)
         } else {
             binding.value = newValue
         }
@@ -73,7 +73,7 @@ extension Binding: Hashable {
 }
 
 // Reference identity
-public func ==<Value>(lhs: Binding<Value>, rhs: Binding<Value>) -> Bool {
+public func ==<Element>(lhs: Binding<Element>, rhs: Binding<Element>) -> Bool {
     return lhs === rhs
 }
 

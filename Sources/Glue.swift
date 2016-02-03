@@ -7,19 +7,19 @@
 //
 
 /// Holds together bindings and manages their value
-public final class Glue<Value: Equatable> {
-    internal var value: Value?
-    internal var bindings: Set<Binding<Value>> = []
+public final class Glue<Element: Equatable> {
+    internal var value: Element?
+    internal var bindings: Set<Binding<Element>> = []
     
     /// Construct a `Glue` with no bindings that's bound to `value`.
-    internal init(value: Value? = nil) {
+    internal init(value: Element? = nil) {
         self.value = value
     }
 }
 
 extension Glue {
     /// Unified value of multiple glue values or throw if unification is not possible
-    public static func unifiedValue(glue: [Glue]) throws -> Value? {
+    public static func unifiedValue(glue: [Glue]) throws -> Element? {
         // If glue values conflict, throw unification error.
         // Otherwise, return the unified value.
         return try glue.map{ $0.value }.reduce(nil) {

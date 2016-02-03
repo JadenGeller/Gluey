@@ -8,13 +8,13 @@
 
 /// Unification type that allows representation of variables and constants,
 /// recursively unifying constant values.
-public enum Term<Value: Equatable> {
-    case Constant(Value)
-    case Variable(Binding<Value>)
+public enum Term<Element: Equatable> {
+    case Constant(Element)
+    case Variable(Binding<Element>)
 }
 
 extension Term {
-    public var value: Value? {
+    public var value: Element? {
         get {
             switch self {
             case .Constant(let literalValue):
@@ -65,11 +65,11 @@ extension Term: Unifiable {
 }
 
 // Recursive unification
-extension Term where Value: Unifiable {
+extension Term where Element: Unifiable {
     public static func unify(lhs: Term, _ rhs: Term) throws {
         switch (lhs, rhs) {
         case let (.Constant(l), .Constant(r)):
-            try Value.unify(l, r)
+            try Element.unify(l, r)
         case let (.Constant(l), .Variable(r)):
             try Binding.resolve(r, withValue: l)
         case let (.Variable(l), .Constant(r)):
@@ -82,7 +82,7 @@ extension Term where Value: Unifiable {
     public static func attempt(value: Term, _ action: () throws -> ()) throws {
         switch value {
         case .Constant(let inner):
-            try Value.attempt(inner, action)
+            try Element.attempt(inner, action)
         case .Variable(let binding):
             try Binding.attempt(binding, action)
         }
@@ -91,7 +91,7 @@ extension Term where Value: Unifiable {
 
 extension Term: Equatable { }
 /// True if `lhs` and `rhs` are the same value or if they share the same binding
-public func ==<Value: Equatable>(lhs: Term<Value>, rhs: Term<Value>) -> Bool {
+public func ==<Element: Equatable>(lhs: Term<Element>, rhs: Term<Element>) -> Bool {
     if let leftValue = lhs.value, rightValue = rhs.value {
         return leftValue == rightValue
     } else if case let .Variable(leftBinding) = lhs, case let .Variable(rightBinding) = rhs {
@@ -115,11 +115,11 @@ extension Term: ContextCopyable {
 }
 
 // Recursive copying
-extension Term where Value: ContextCopyable {
+extension Term where Element: ContextCopyable {
     public static func copy(this: Term, withContext context: CopyContext) -> Term {
         switch this {
         case .Constant(let value):
-            return .Constant(Value.copy(value, withContext: context))
+            return .Constant(Element.copy(value, withContext: context))
         case .Variable(let binding):
             return .Variable(Binding.copy(binding, withContext: context))
         }
