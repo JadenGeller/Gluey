@@ -47,5 +47,5 @@ print(d.value?.value) // -> 10
 
 ## Documentation
 
-Still confused? Read more about Gluey in the documentation [here](http://jadengeller.github.io/Gluey/docs/index.html)! Or tweet at [me](https://twitter.com/jadengeller) if you still need some help. :)
+Still confused? Read more about Gluey in the [documentation](http://jadengeller.github.io/Gluey/docs/index.html)! Or tweet at [me](https://twitter.com/jadengeller) if you still need some help. :)
 
