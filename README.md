@@ -28,15 +28,15 @@ try Binding.unify(a, e) // UNIFICATION ERROR!!!
 // Since a.value = 10 and b.value = 20, they cannot be unified.
 ```
 
-Gluey also defines a `Term<Value>` enum with cases `Variable(Binding<Value>)` and `Constant(Value)` that makes it easy to unify known constants with unknown variables. The most useful attribe of `Term` is that it also attempt to recurisvely unify the constant case if `Value: Unifiable`. This allows `Term` to be used to create powerful tree-like structures that can be easily unified.
+Gluey also defines a `Value<Element>` enum with cases `Variable(Binding<Element>)` and `Constant(Element)` that makes it easy to unify known constants with unknown variables. The most useful attribe of `Value` is that it also attempt to recurisvely unify the constant case if `Element: Unifiable`. This allows `Value` to be used to create powerful tree-like structures that can be easily unified.
 ```swift
-let a = Term.Constant(10)
-let b = Term.Variable(Binding<Int>())
-try Term.unify(a, b)
+let a = Value.Constant(10)
+let b = Value.Variable(Binding<Int>())
+try Value.unify(a, b)
 print(b.value) // -> 10
 
-let c = Term.Constant(Term.Constant(10))
-let d = Term.Constant(Term.Variable(Binding<Int>()))
-try Term.unify(c, d)
+let c = Value.Constant(Value.Constant(10))
+let d = Value.Constant(Value.Variable(Binding<Int>()))
+try Value.unify(c, d)
 print(d.value?.value) // -> 10
 ```
