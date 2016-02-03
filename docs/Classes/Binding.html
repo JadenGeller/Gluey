@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Binding Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/Binding" class="dashAnchor"></a>
+    <a title="Binding Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html"> Docs</a> (100% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html"> Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        Binding Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/Binding.html">Binding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CopyContext.html">CopyContext</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/Value.html">Value</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions/==(_:_:).html">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:ZF5Glueyoi2eeuRq_Ss9Equatable_FTGCS_7Bindingq__GS1_q___Sb">==(_:_:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/ContextCopyable.html">ContextCopyable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Unifiable.html">Unifiable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/UnificationError.html">UnificationError</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Binding</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">Binding</span><span class="o">&lt;</span><span class="kt">Element</span><span class="p">:</span> <span class="kt">Equatable</span><span class="o">&gt;</span></code></pre>
+
+                </div>
+              </div>
+            <p>The most basic unifiable type. Stores an <code>Element</code> such that,
+on unification, both <code>Bindings</code> refer to this same <code>Element</code>.
+Note that this element may be set to <code>nil</code> to indicate that no
+value has been determined.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC5Gluey7BindingcuRq_Ss9Equatable_FMGS0_q__FT5valueGSqq___GS0_q__"></a>
+                    <a name="//apple_ref/swift/Method/init(value:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC5Gluey7BindingcuRq_Ss9Equatable_FMGS0_q__FT5valueGSqq___GS0_q__">init(value:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Constructs a new unbound <code>Glue</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="kt">Element</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC5Gluey7Binding5valueGSqq__"></a>
+                    <a name="//apple_ref/swift/Property/value" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC5Gluey7Binding5valueGSqq__">value</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The <code>value</code> stored by this <code><a href="../Classes/Binding.html">Binding</a></code>, otherwise <code>nil</code> if it
+is not yet determined.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Element</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:ZFC5Gluey7Binding7resolveuRq_Ss9Equatable_FMGS0_q__FzTGS0_q__9withValueq__T_"></a>
+                    <a name="//apple_ref/swift/Method/resolve(_:withValue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:ZFC5Gluey7Binding7resolveuRq_Ss9Equatable_FMGS0_q__FzTGS0_q__9withValueq__T_">resolve(_:withValue:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Associates the <code>binding</code> with the <code>newValue</code> if possible, throwing a <code><a href="../Structs/UnificationError.html">UnificationError</a></code>
+if the <code>binding</code> is already associated with a different value.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">resolve</span><span class="p">(</span><span class="nv">binding</span><span class="p">:</span> <span class="kt">Binding</span><span class="p">,</span> <span class="n">withValue</span> <span class="nv">newValue</span><span class="p">:</span> <span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:ZFeRq_5Gluey9Unifiableq_Ss9Equatable_S_CS_7Binding7resolveuRq_S0_q_S1__FMGS2_q__FzTGS2_q__9withValueq__T_"></a>
+                    <a name="//apple_ref/swift/Method/resolve(_:withValue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:ZFeRq_5Gluey9Unifiableq_Ss9Equatable_S_CS_7Binding7resolveuRq_S0_q_S1__FMGS2_q__FzTGS2_q__9withValueq__T_">resolve(_:withValue:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>If <code>binding</code> has no value set, its value is set to <code>newValue</code>. Otherwise, the current
+<code><a href="../Classes/Binding.html#/s:vC5Gluey7Binding5valueGSqq__">value</a></code> is unified with <code>newValue</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">resolve</span><span class="p">(</span><span class="nv">binding</span><span class="p">:</span> <span class="kt">Binding</span><span class="p">,</span> <span class="n">withValue</span> <span class="nv">newValue</span><span class="p">:</span> <span class="kt">Element</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC5Gluey7Binding11descriptionSS"></a>
+                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC5Gluey7Binding11descriptionSS">description</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A textual representation of the value or the binding if no value exists.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC5Gluey7Binding9hashValueSi"></a>
+                    <a name="//apple_ref/swift/Property/hashValue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC5Gluey7Binding9hashValueSi">hashValue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">Binding</span><span class="o">&lt;</span><span class="kt">Element</span><span class="p">:</span> <span class="kt">Equatable</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:ZFC5Gluey7Binding5unifyuRq_Ss9Equatable_FMGS0_q__FzTGS0_q__GS0_q___T_"></a>
+                    <a name="//apple_ref/swift/Method/unify(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:ZFC5Gluey7Binding5unifyuRq_Ss9Equatable_FMGS0_q__FzTGS0_q__GS0_q___T_">unify(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Unifies <code>lhs</code> with <code>rhs</code>, otherwise throws a <code><a href="../Structs/UnificationError.html">UnificationError</a></code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">unify</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Binding</span><span class="p">,</span> <span class="n">_</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Binding</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:ZFC5Gluey7Binding7attemptuRq_Ss9Equatable_FMGS0_q__FzTGS0_q__FzT_T__T_"></a>
+                    <a name="//apple_ref/swift/Method/attempt(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:ZFC5Gluey7Binding7attemptuRq_Ss9Equatable_FMGS0_q__FzTGS0_q__FzT_T__T_">attempt(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Performs <code>action</code> as an operation on <code>self</code> such that the
+<code>self</code> preserves its initial <code>glue</code> value if the operation fails.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">attempt</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="kt">Binding</span><span class="p">,</span> <span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:ZFC5Gluey7Binding4copyuRq_Ss9Equatable_FMGS0_q__FTGS0_q__11withContextCS_11CopyContext_GS0_q__"></a>
+                    <a name="//apple_ref/swift/Method/copy(_:withContext:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:ZFC5Gluey7Binding4copyuRq_Ss9Equatable_FMGS0_q__FTGS0_q__11withContextCS_11CopyContext_GS0_q__">copy(_:withContext:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Copies <code>this</code> reusing any substructure that has already been copied within
+this context, and storing any newly generated substructure into the context.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">copy</span><span class="p">(</span><span class="nv">this</span><span class="p">:</span> <span class="kt">Binding</span><span class="p">,</span> <span class="n">withContext</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">CopyContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Binding</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-02-02)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.5.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
