@@ -4,6 +4,8 @@ Gluey is a bare-bones framework. It defines low-level primitives for unifying ob
 
 ## Binding
 
+> Your handy unification primitive.
+
 A `Binding` is a sort of variable that can be linked to another binding such that they will always have the same value. The unification of two `Binding`s will always succeed unless both already have values, and these values are not equal. If the two are incompatible, a `UnificationError` is thrown. Behind the scenes, `Binding`s are held together by sharing a common `Glue`, but you don't need to worry about this. All you need to know is that once two `Binding`s are bound, they will always have the same value.
 
 ```swift
@@ -29,6 +31,8 @@ try Binding.unify(a, e) // UNIFICATION ERROR!!!
 ```
 
 ## Unifiable
+
+> The recursive unification superstar!
 
 Gluey also defines a generic enum `Unifiable<Element>` with cases `Variable(Binding<Element>)` and `Constant(Element)` making it easy to unify known constants with unknown variables. A very useful property of `Unifiable` is that it will also attempt to recurisvely unify the constant case if `Element: UnifiableType`. This allows `Unifiable` to be used to create powerful tree-like structures that can be easily unified.
 
