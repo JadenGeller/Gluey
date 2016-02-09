@@ -4,9 +4,10 @@
 > unification types suitable for logic programming, but it defines primitives that make these much easier to build. For a
 > more full-featured logic framework (built on top of Gluey!), check out [Axiomatic](https://github.com/JadenGeller/Axiomatic).
 
+
 ## Binding
 
-Gluey defines protocol `UnifiableType` for types that support unification via a backing `Glue` object that holds unified objects together. The most basic `UnifiableType` is a `Binding`. When two bindings are unified, their backing `Glue` objects are tested for compatability (at most one unique value must be assigned). If the two are compatible, a new shared `Glue` replaces their backing and binds them together. If the two are incompatible, a `UnificationError` is thrown.
+A `Binding` is a sort of variable that can be linked to another binding such that they will always have the same value. The unification of two `Binding`s will always succeed unless both already have values, and these values are not equal. If the two are incompatible, a `UnificationError` is thrown. Behind the scenes, `Binding`s are held together by sharing a common `Glue`, but you don't need to worry about this. All you need to know is that once two `Binding`s are bound, they will always have the same value.
 
 ```swift
 let a = Binding<Int>()
@@ -32,13 +33,16 @@ try Binding.unify(a, e) // UNIFICATION ERROR!!!
 
 ## Unifiable
 
-Gluey also defines a `Unifiable<Element>` enum with cases `Variable(Binding<Element>)` and `Constant(Element)` that makes it easy to unify known constants with unknown variables. The most useful property of `Unifiable` is that it also attempt to recurisvely unify the constant case if `Element: UnifiableType`. This allows `Unifiable` to be used to create powerful tree-like structures that can be easily unified.
+Gluey also defines a generic enum `Unifiable<Element>` with cases `Variable(Binding<Element>)` and `Constant(Element)` making it easy to unify known constants with unknown variables. A very useful property of `Unifiable` is that it will also attempt to recurisvely unify the constant case if `Element: UnifiableType`. This allows `Unifiable` to be used to create powerful tree-like structures that can be easily unified.
+
 ```swift
+// Unification of constant and variable
 let a = Unifiable.Constant(10)
 let b = Unifiable.Variable(Binding<Int>())
 try Unifiable.unify(a, b)
 print(b.value) // -> 10
 
+// Recursive unification
 let c = Unifiable.Constant(Unifiable.Constant(10))
 let d = Unifiable.Constant(Unifiable.Variable(Binding<Int>()))
 try Unifiable.unify(c, d)
