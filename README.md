@@ -1,9 +1,6 @@
 # Gluey
 
-> Gluey is a bare-bones framework. It defines low-level primitives for unifying objects. It does not define tree-like
-> unification types suitable for logic programming, but it defines primitives that make these much easier to build. For a
-> more full-featured logic framework (built on top of Gluey!), check out [Axiomatic](https://github.com/JadenGeller/Axiomatic).
-
+Gluey is a bare-bones framework. It defines low-level primitives for unifying objects. It does not define tree-like unification types suitable for logic programming, but it defines recursive unification primitives that make these much easier to build. For a more full-featured logic framework (built on top of Gluey!), check out [Axiomatic](https://github.com/JadenGeller/Axiomatic).
 
 ## Binding
 
