@@ -15,6 +15,7 @@
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html"> Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/JadenGeller/Gluey"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -42,7 +43,7 @@
             <a href="../Enums.html">Enums</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Enums/Value.html">Value</a>
+                <a href="../Enums/Unifiable.html">Unifiable</a>
               </li>
             </ul>
           </li>
@@ -64,7 +65,7 @@
                 <a href="../Protocols/ContextCopyable.html">ContextCopyable</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/Unifiable.html">Unifiable</a>
+                <a href="../Protocols/UnifiableType.html">UnifiableType</a>
               </li>
             </ul>
           </li>
@@ -84,7 +85,7 @@
             <h1>==(_:_:)</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="o">==&lt;</span><span class="kt">Element</span><span class="p">:</span> <span class="kt">Equatable</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Value</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Value</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="o">==&lt;</span><span class="kt">Element</span><span class="p">:</span> <span class="kt">Equatable</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Unifiable</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Unifiable</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                 </div>
               </div>
@@ -97,9 +98,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:tZF5Glueyoi2eeuRq_Ss9Equatable_FTGOS_5Valueq__GS1_q___SbL_7ElementMq_"></a>
+                    <a name="/s:tZF5Glueyoi2eeuRq_Ss9Equatable_FTGOS_9Unifiableq__GS1_q___SbL_7ElementMq_"></a>
                     <a name="//apple_ref/swift/Parameter/Element" class="dashAnchor"></a>
-                    <a class="token" href="#/s:tZF5Glueyoi2eeuRq_Ss9Equatable_FTGOS_5Valueq__GS1_q___SbL_7ElementMq_">Element</a>
+                    <a class="token" href="#/s:tZF5Glueyoi2eeuRq_Ss9Equatable_FTGOS_9Unifiableq__GS1_q___SbL_7ElementMq_">Element</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -114,7 +115,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="o">==&lt;</span><span class="kt">Element</span><span class="p">:</span> <span class="kt">Equatable</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Value</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Value</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="o">==&lt;</span><span class="kt">Element</span><span class="p">:</span> <span class="kt">Equatable</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Unifiable</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Unifiable</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -126,7 +127,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-02-02)</p>
+          <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">Jaden</a>. All rights reserved. (Last updated: 2016-02-09)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.5.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

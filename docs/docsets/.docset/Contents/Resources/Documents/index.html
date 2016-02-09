@@ -14,6 +14,7 @@
     <header>
       <div class="content-wrapper">
         <p><a href="index.html"> Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/JadenGeller/Gluey"><img src="img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -41,7 +42,7 @@
             <a href="Enums.html">Enums</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Enums/Value.html">Value</a>
+                <a href="Enums/Unifiable.html">Unifiable</a>
               </li>
             </ul>
           </li>
@@ -63,7 +64,7 @@
                 <a href="Protocols/ContextCopyable.html">ContextCopyable</a>
               </li>
               <li class="nav-group-task">
-                <a href="Protocols/Unifiable.html">Unifiable</a>
+                <a href="Protocols/UnifiableType.html">UnifiableType</a>
               </li>
             </ul>
           </li>
@@ -81,12 +82,63 @@
         <section>
           <section class="section">
             
-            <a href='#authors' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='authors'>Authors</h3>
+            <a href='#gluey' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='gluey'>Gluey</h1>
+
+<p>Gluey is a bare-bones framework. It defines low-level primitives for unifying objects. It does not define tree-like unification types suitable for logic programming, but it defines recursive unification primitives that make these much easier to build. For a more full-featured logic framework (built on top of Gluey!), check out <a href="https://github.com/JadenGeller/Axiomatic">Axiomatic</a>.</p>
+<a href='#binding' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='binding'>Binding</h2>
+
+<blockquote>
+<p>Your handy unification primitive.</p>
+</blockquote>
+
+<p>A <code>Binding</code> is a sort of variable that can be linked to another binding such that they will always have the same value. The unification of two <code>Binding</code>s will always succeed unless both already have values, and these values are not equal. If the two are incompatible, a <code>UnificationError</code> is thrown. Behind the scenes, <code>Binding</code>s are held together by sharing a common <code>Glue</code>, but you don&rsquo;t need to worry about this. All you need to know is that once two <code>Binding</code>s are bound, they will always have the same value.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="kt">Binding</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">b</span> <span class="o">=</span> <span class="kt">Binding</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">c</span> <span class="o">=</span> <span class="kt">Binding</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">()</span>
+
+<span class="k">try</span> <span class="kt">Binding</span><span class="o">.</span><span class="nf">unify</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="c1">// all good</span>
+<span class="k">try</span> <span class="kt">Binding</span><span class="o">.</span><span class="nf">unify</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="c1">// we're cool</span>
+
+<span class="n">a</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="c1">// -&gt; 10</span>
+
+<span class="k">let</span> <span class="nv">d</span> <span class="o">=</span> <span class="kt">Binding</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">()</span>
+<span class="k">try</span> <span class="kt">Binding</span><span class="o">.</span><span class="nf">unify</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span> <span class="c1">// no problem</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="c1">// -&gt; 10</span>
+<span class="c1">// Since d.value = nil, it will take on a's value.</span>
+
+<span class="k">let</span> <span class="nv">e</span> <span class="o">=</span> <span class="kt">Binding</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">()</span>
+<span class="n">e</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="k">try</span> <span class="kt">Binding</span><span class="o">.</span><span class="nf">unify</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span> <span class="c1">// UNIFICATION ERROR!!!</span>
+<span class="c1">// Since a.value = 10 and b.value = 20, they cannot be unified.</span>
+</code></pre>
+<a href='#unifiable' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='unifiable'>Unifiable</h2>
+
+<blockquote>
+<p>The recursive unification superstar!</p>
+</blockquote>
+
+<p>Gluey also defines a generic enum <code>Unifiable&lt;Element&gt;</code> with cases <code>Variable(Binding&lt;Element&gt;)</code> and <code>Constant(Element)</code> making it easy to unify known constants with unknown variables. A very useful property of <code>Unifiable</code> is that it will also attempt to recurisvely unify the constant case if <code>Element: UnifiableType</code>. This allows <code>Unifiable</code> to be used to create powerful tree-like structures that can be easily unified.</p>
+<pre class="highlight swift"><code><span class="c1">// Unification of constant and variable</span>
+<span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="kt">Unifiable</span><span class="o">.</span><span class="kt">Constant</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">b</span> <span class="o">=</span> <span class="kt">Unifiable</span><span class="o">.</span><span class="kt">Variable</span><span class="p">(</span><span class="kt">Binding</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">())</span>
+<span class="k">try</span> <span class="kt">Unifiable</span><span class="o">.</span><span class="nf">unify</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="c1">// -&gt; 10</span>
+
+<span class="c1">// Recursive unification</span>
+<span class="k">let</span> <span class="nv">c</span> <span class="o">=</span> <span class="kt">Unifiable</span><span class="o">.</span><span class="kt">Constant</span><span class="p">(</span><span class="kt">Unifiable</span><span class="o">.</span><span class="kt">Constant</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="k">let</span> <span class="nv">d</span> <span class="o">=</span> <span class="kt">Unifiable</span><span class="o">.</span><span class="kt">Constant</span><span class="p">(</span><span class="kt">Unifiable</span><span class="o">.</span><span class="kt">Variable</span><span class="p">(</span><span class="kt">Binding</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">()))</span>
+<span class="k">try</span> <span class="kt">Unifiable</span><span class="o">.</span><span class="nf">unify</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">value</span><span class="p">?</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="c1">// -&gt; 10</span>
+</code></pre>
+<a href='#documentation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='documentation'>Documentation</h2>
+
+<p>Still confused? Read more about Gluey in the <a href="http://jadengeller.github.io/Gluey/docs/index.html">documentation</a> or maybe check out how its used in <a href="https://github.com/JadenGeller/Axiomatic">Axiomatic</a>! Or tweet at <a href="https://twitter.com/jadengeller">me</a> if you still need some help. :)</p>
 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-02-02)</p>
+          <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">Jaden</a>. All rights reserved. (Last updated: 2016-02-09)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.5.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
