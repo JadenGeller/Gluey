@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		4D09710F1C4CF23F00F176CC /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D09710B1C4CF23F00F176CC /* Binding.swift */; };
 		4D0971101C4CF23F00F176CC /* Glue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D09710C1C4CF23F00F176CC /* Glue.swift */; };
-		4D0971111C4CF23F00F176CC /* Unifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D09710D1C4CF23F00F176CC /* Unifiable.swift */; };
+		4D0971111C4CF23F00F176CC /* UnifiableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D09710D1C4CF23F00F176CC /* UnifiableType.swift */; };
 		4D0971121C4CF23F00F176CC /* UnificationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D09710E1C4CF23F00F176CC /* UnificationError.swift */; };
 		4D9C71301C4CDA8C008C8726 /* Gluey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D9C71251C4CDA8C008C8726 /* Gluey.framework */; };
 		4D9C71351C4CDA8C008C8726 /* GlueyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C71341C4CDA8C008C8726 /* GlueyTests.swift */; };
 		4DC710391C4D030000834A0E /* DriedGlue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC710381C4D030000834A0E /* DriedGlue.swift */; };
-		4DC710651C4D0CFD00834A0E /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC710641C4D0CFD00834A0E /* Value.swift */; };
+		4DC710651C4D0CFD00834A0E /* Unifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC710641C4D0CFD00834A0E /* Unifiable.swift */; };
 		4DD9AD4F1C5EEF8200252595 /* ContextCopyable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD9AD4E1C5EEF8200252595 /* ContextCopyable.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,17 +29,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4D09710B1C4CF23F00F176CC /* Binding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Binding.swift; path = ../../Sources/Binding.swift; sourceTree = "<group>"; };
+		4D09710B1C4CF23F00F176CC /* Binding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Binding.swift; path = ../../Sources/Binding.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4D09710C1C4CF23F00F176CC /* Glue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Glue.swift; path = ../../Sources/Glue.swift; sourceTree = "<group>"; };
-		4D09710D1C4CF23F00F176CC /* Unifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Unifiable.swift; path = ../../Sources/Unifiable.swift; sourceTree = "<group>"; };
-		4D09710E1C4CF23F00F176CC /* UnificationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UnificationError.swift; path = ../../Sources/UnificationError.swift; sourceTree = "<group>"; };
+		4D09710D1C4CF23F00F176CC /* UnifiableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = UnifiableType.swift; path = ../../Sources/UnifiableType.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		4D09710E1C4CF23F00F176CC /* UnificationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = UnificationError.swift; path = ../../Sources/UnificationError.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4D9C71251C4CDA8C008C8726 /* Gluey.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Gluey.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D9C712A1C4CDA8C008C8726 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D9C712F1C4CDA8C008C8726 /* GlueyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GlueyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D9C71341C4CDA8C008C8726 /* GlueyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlueyTests.swift; sourceTree = "<group>"; };
 		4D9C71361C4CDA8C008C8726 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DC710381C4D030000834A0E /* DriedGlue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DriedGlue.swift; path = ../../Sources/DriedGlue.swift; sourceTree = "<group>"; };
-		4DC710641C4D0CFD00834A0E /* Value.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Value.swift; path = ../../Sources/Value.swift; sourceTree = "<group>"; };
+		4DC710641C4D0CFD00834A0E /* Unifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Unifiable.swift; path = ../../Sources/Unifiable.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4DD9AD4E1C5EEF8200252595 /* ContextCopyable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContextCopyable.swift; path = ../../Sources/ContextCopyable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,12 +84,12 @@
 			isa = PBXGroup;
 			children = (
 				4D09710E1C4CF23F00F176CC /* UnificationError.swift */,
-				4D09710D1C4CF23F00F176CC /* Unifiable.swift */,
+				4D09710D1C4CF23F00F176CC /* UnifiableType.swift */,
 				4DD9AD4E1C5EEF8200252595 /* ContextCopyable.swift */,
 				4D09710C1C4CF23F00F176CC /* Glue.swift */,
 				4DC710381C4D030000834A0E /* DriedGlue.swift */,
 				4D09710B1C4CF23F00F176CC /* Binding.swift */,
-				4DC710641C4D0CFD00834A0E /* Value.swift */,
+				4DC710641C4D0CFD00834A0E /* Unifiable.swift */,
 				4D9C712A1C4CDA8C008C8726 /* Info.plist */,
 			);
 			path = Gluey;
@@ -212,10 +212,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D0971101C4CF23F00F176CC /* Glue.swift in Sources */,
-				4D0971111C4CF23F00F176CC /* Unifiable.swift in Sources */,
+				4D0971111C4CF23F00F176CC /* UnifiableType.swift in Sources */,
 				4D0971121C4CF23F00F176CC /* UnificationError.swift in Sources */,
 				4DD9AD4F1C5EEF8200252595 /* ContextCopyable.swift in Sources */,
-				4DC710651C4D0CFD00834A0E /* Value.swift in Sources */,
+				4DC710651C4D0CFD00834A0E /* Unifiable.swift in Sources */,
 				4D09710F1C4CF23F00F176CC /* Binding.swift in Sources */,
 				4DC710391C4D030000834A0E /* DriedGlue.swift in Sources */,
 			);

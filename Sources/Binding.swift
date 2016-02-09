@@ -54,7 +54,7 @@ extension Binding {
     }
 }
 
-extension Binding where Element: Unifiable {
+extension Binding where Element: UnifiableType {
     /// If `binding` has no value set, its value is set to `newValue`. Otherwise, the current
     /// `value` is unified with `newValue`.
     public static func resolve(binding: Binding, withValue newValue: Element) throws {
@@ -90,9 +90,9 @@ public func ==<Element>(lhs: Binding<Element>, rhs: Binding<Element>) -> Bool {
     return lhs === rhs
 }
 
-// MARK: Unifiable
+// MARK: UnifiableType
 
-extension Binding: Unifiable {
+extension Binding: UnifiableType {
     /// Unifies `lhs` with `rhs`, otherwise throws a `UnificationError`.
     public static func unify(lhs: Binding, _ rhs: Binding) throws {
         try Glue.merge([lhs.glue, rhs.glue])

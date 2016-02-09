@@ -135,60 +135,60 @@ class GlueyTests: XCTestCase {
     }
     
     func testValue() {
-        let a = Value.Constant(10)
-        let b = Value.Variable(Binding<Int>())
-        let c = Value.Constant(12)
+        let a = Unifiable.Constant(10)
+        let b = Unifiable.Variable(Binding<Int>())
+        let c = Unifiable.Constant(12)
 
-        try! Value.unify(a, b)
+        try! Unifiable.unify(a, b)
         XCTAssertEqual(10, b.value)
         
-        try! Value.unify(a, a)
+        try! Unifiable.unify(a, a)
         do {
-            try Value.unify(a, c)
+            try Unifiable.unify(a, c)
             XCTFail()
         } catch { }
     }
     
     func testRecursiveUnificaiton() {
-        let a = Value.Constant(Value.Variable(Binding<Int>()))
-        let b = Value.Constant(Value.Constant(10))
+        let a = Unifiable.Constant(Unifiable.Variable(Binding<Int>()))
+        let b = Unifiable.Constant(Unifiable.Constant(10))
         
-        try! Value.unify(a, b)
+        try! Unifiable.unify(a, b)
         XCTAssertEqual(10, b.value?.value)
     }
     
     func testRecursiveBacktracking() {
-        let a = Value.Constant(Value.Variable(Binding<Int>()))
-        let b = Value.Constant(Value.Constant(10))
-        let c = Value.Constant(Value.Constant(20))
-        let d = Value.Constant(Value.Variable(Binding<Int>()))
+        let a = Unifiable.Constant(Unifiable.Variable(Binding<Int>()))
+        let b = Unifiable.Constant(Unifiable.Constant(10))
+        let c = Unifiable.Constant(Unifiable.Constant(20))
+        let d = Unifiable.Constant(Unifiable.Variable(Binding<Int>()))
         
-        try! Value.unify(a, b)
+        try! Unifiable.unify(a, b)
         do {
-            try Value.attempt(a) {
-                try Value.unify(b, c)
+            try Unifiable.attempt(a) {
+                try Unifiable.unify(b, c)
             }
         } catch {
-            try! Value.unify(a, d)
+            try! Unifiable.unify(a, d)
         }
         XCTAssertEqual(10, d.value?.value)
     }
     
     func testCopy() {
-        let a = Value.Variable(Binding<Int>())
-        let b = Value.Variable(Binding<Int>())
-        try! Value.unify(a, b)
+        let a = Unifiable.Variable(Binding<Int>())
+        let b = Unifiable.Variable(Binding<Int>())
+        try! Unifiable.unify(a, b)
         let context = CopyContext()
-        let aa = Value.copy(a, withContext: context)
-        let bb = Value.copy(b, withContext: context)
+        let aa = Unifiable.copy(a, withContext: context)
+        let bb = Unifiable.copy(b, withContext: context)
         
-        try! Value.unify(a, Value.Constant(1))
+        try! Unifiable.unify(a, Unifiable.Constant(1))
         XCTAssertEqual(1, b.value)
         XCTAssertEqual(1, a.value)
         XCTAssertEqual(nil, aa.value)
         XCTAssertEqual(nil, bb.value)
         
-        try! Value.unify(aa, Value.Constant(2))
+        try! Unifiable.unify(aa, Unifiable.Constant(2))
         XCTAssertEqual(1, b.value)
         XCTAssertEqual(1, a.value)
         XCTAssertEqual(2, aa.value)
@@ -196,20 +196,20 @@ class GlueyTests: XCTestCase {
     }
     
     func testRecursiveCopy() {
-        let a = Value.Constant(Value.Variable(Binding<Int>()))
-        let b = Value.Constant(Value.Variable(Binding<Int>()))
-        try! Value.unify(a, b)
+        let a = Unifiable.Constant(Unifiable.Variable(Binding<Int>()))
+        let b = Unifiable.Constant(Unifiable.Variable(Binding<Int>()))
+        try! Unifiable.unify(a, b)
         let context = CopyContext()
-        let aa = Value.copy(a, withContext: context)
-        let bb = Value.copy(b, withContext: context)
+        let aa = Unifiable.copy(a, withContext: context)
+        let bb = Unifiable.copy(b, withContext: context)
         
-        try! Value.unify(a, Value.Constant(Value.Constant(1)))
+        try! Unifiable.unify(a, Unifiable.Constant(Unifiable.Constant(1)))
         XCTAssertEqual(1, b.value!.value)
         XCTAssertEqual(1, a.value!.value)
         XCTAssertEqual(nil, aa.value!.value)
         XCTAssertEqual(nil, bb.value!.value)
         
-        try! Value.unify(aa, Value.Constant(Value.Constant(2)))
+        try! Unifiable.unify(aa, Unifiable.Constant(Unifiable.Constant(2)))
         XCTAssertEqual(1, b.value!.value)
         XCTAssertEqual(1, a.value!.value)
         XCTAssertEqual(2, aa.value!.value)
