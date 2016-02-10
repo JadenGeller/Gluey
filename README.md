@@ -1,6 +1,6 @@
 # Gluey
 
-Gluey is a bare-bones framework. It defines low-level primitives for unifying objects. It does not define tree-like unification types suitable for logic programming, but it defines recursive unification primitives that make these much easier to build. For a more full-featured logic framework (built on top of Gluey!), check out [Axiomatic](https://github.com/JadenGeller/Axiomatic).
+Gluey is a bare-bones unification framework. It defines low-level primitives for unifying objects including support for *recursive unfication* and *backtracking*. Though it does not define tree-like unification types, it does define primitives that make these very simple to build. For a full-featured logic framework (built on top of Gluey!), check out [Axiomatic](https://github.com/JadenGeller/Axiomatic).
 
 ## Binding
 
@@ -53,4 +53,3 @@ print(d.value?.value) // -> 10
 ## Documentation
 
 Still confused? Read more about Gluey in the [documentation](http://jadengeller.github.io/Gluey/docs/index.html) or maybe check out how its used in [Axiomatic](https://github.com/JadenGeller/Axiomatic)! Or tweet at [me](https://twitter.com/jadengeller) if you still need some help. :)
-
