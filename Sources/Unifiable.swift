@@ -11,7 +11,7 @@
 /// unification types.
 public enum Unifiable<Element: Equatable> {
     /// A value that cannot be changed.
-    case Constant(Element)
+    case Literal(Element)
     /// A value that is determined by unification.
     case Variable(Binding<Element>)
 }
@@ -21,7 +21,7 @@ extension Unifiable {
     public var value: Element? {
         get {
             switch self {
-            case .Constant(let literalValue):
+            case .Literal(let literalValue):
                 return literalValue
             case .Variable(let binding):
                 return binding.value
@@ -34,7 +34,7 @@ extension Unifiable: CustomStringConvertible {
     /// A textual representation of the value or the binding if no value exists.
     public var description: String {
         switch self {
-        case .Constant(let value):
+        case .Literal(let value):
             return String(value)
         case .Variable(let binding):
             return binding.description
@@ -46,13 +46,13 @@ extension Unifiable: UnifiableType {
     /// Unifies `lhs` with `rhs`, otherwise throws a `UnificationError`.
     public static func unify(lhs: Unifiable, _ rhs: Unifiable) throws {
         switch (lhs, rhs) {
-        case let (.Constant(l), .Constant(r)):
+        case let (.Literal(l), .Literal(r)):
             guard l == r else {
                 throw UnificationError("Cannot unify literals of different values.")
             }
-        case let (.Constant(l), .Variable(r)):
+        case let (.Literal(l), .Variable(r)):
             try Binding.resolve(r, withValue: l)
-        case let (.Variable(l), .Constant(r)):
+        case let (.Variable(l), .Literal(r)):
             try Binding.resolve(l, withValue: r)
         case let (.Variable(l), .Variable(r)):
             try Binding.unify(l, r)
@@ -63,7 +63,7 @@ extension Unifiable: UnifiableType {
     /// `self` preserves its initial `glue` value if the operation fails.
     public static func attempt(value: Unifiable, _ action: () throws -> ()) throws {
         switch value {
-        case .Constant:
+        case .Literal:
             try action()
         case .Variable(let binding):
             try Binding.attempt(binding, action)
@@ -76,11 +76,11 @@ extension Unifiable where Element: UnifiableType {
     /// Recursively unifies `lhs` with `rhs`, otherwise throws a `UnificationError`.
     public static func unify(lhs: Unifiable, _ rhs: Unifiable) throws {
         switch (lhs, rhs) {
-        case let (.Constant(l), .Constant(r)):
+        case let (.Literal(l), .Literal(r)):
             try Element.unify(l, r)
-        case let (.Constant(l), .Variable(r)):
+        case let (.Literal(l), .Variable(r)):
             try Binding.resolve(r, withValue: l)
-        case let (.Variable(l), .Constant(r)):
+        case let (.Variable(l), .Literal(r)):
             try Binding.resolve(l, withValue: r)
         case let (.Variable(l), .Variable(r)):
             try Binding.unify(l, r)
@@ -91,7 +91,7 @@ extension Unifiable where Element: UnifiableType {
     /// `self` preserves its initial `glue` value if the operation fails.
     public static func attempt(value: Unifiable, _ action: () throws -> ()) throws {
         switch value {
-        case .Constant(let inner):
+        case .Literal(let inner):
             try Element.attempt(inner, action)
         case .Variable(let binding):
             try Binding.attempt(binding, action)
@@ -118,8 +118,8 @@ extension Unifiable: ContextCopyable {
     /// this context, and storing any newly generated substructure into the context.
     public static func copy(this: Unifiable, withContext context: CopyContext) -> Unifiable {
         switch this {
-        case .Constant(let value):
-            return .Constant(value)
+        case .Literal(let value):
+            return .Literal(value)
         case .Variable(let binding):
             return .Variable(Binding.copy(binding, withContext: context))
         }
@@ -132,8 +132,8 @@ extension Unifiable where Element: ContextCopyable {
     /// this context, and storing any newly generated substructure into the context.
     public static func copy(this: Unifiable, withContext context: CopyContext) -> Unifiable {
         switch this {
-        case .Constant(let value):
-            return .Constant(Element.copy(value, withContext: context))
+        case .Literal(let value):
+            return .Literal(Element.copy(value, withContext: context))
         case .Variable(let binding):
             return .Variable(Binding.copy(binding, withContext: context))
         }
