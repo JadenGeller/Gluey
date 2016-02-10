@@ -1,6 +1,6 @@
 # Gluey
 
-Gluey is a bare-bones framework. It defines low-level primitives for unifying objects. It does not define tree-like unification types suitable for logic programming, but it defines recursive unification primitives that make these much easier to build. For a more full-featured logic framework (built on top of Gluey!), check out [Axiomatic](https://github.com/JadenGeller/Axiomatic).
+Gluey is a bare-bones unification framework. It defines low-level primitives for unifying objects including support for *recursive unfication* and *backtracking*. Though it does not define tree-like unification types, it does define primitives that make these very simple to build. For a full-featured logic framework (built on top of Gluey!), check out [Axiomatic](https://github.com/JadenGeller/Axiomatic).
 
 ## Binding
 
@@ -34,18 +34,18 @@ try Binding.unify(a, e) // UNIFICATION ERROR!!!
 
 > The recursive unification superstar!
 
-Gluey also defines a generic enum `Unifiable<Element>` with cases `Variable(Binding<Element>)` and `Constant(Element)` making it easy to unify known constants with unknown variables. A very useful property of `Unifiable` is that it will also attempt to recurisvely unify the constant case if `Element: UnifiableType`. This allows `Unifiable` to be used to create powerful tree-like structures that can be easily unified.
+Gluey also defines a generic enum `Unifiable<Element>` with cases `Variable(Binding<Element>)` and `Literal(Element)` making it easy to unify known literals with unknown variables. A very useful property of `Unifiable` is that it will also attempt to recurisvely unify the literal case if `Element: UnifiableType`. This allows `Unifiable` to be used to create powerful tree-like structures that can be easily unified.
 
 ```swift
-// Unification of constant and variable
-let a = Unifiable.Constant(10)
+// Unification of literal and variable
+let a = Unifiable.Literal(10)
 let b = Unifiable.Variable(Binding<Int>())
 try Unifiable.unify(a, b)
 print(b.value) // -> 10
 
 // Recursive unification
-let c = Unifiable.Constant(Unifiable.Constant(10))
-let d = Unifiable.Constant(Unifiable.Variable(Binding<Int>()))
+let c = Unifiable.Literal(Unifiable.Literal(10))
+let d = Unifiable.Literal(Unifiable.Variable(Binding<Int>()))
 try Unifiable.unify(c, d)
 print(d.value?.value) // -> 10
 ```
@@ -53,4 +53,3 @@ print(d.value?.value) // -> 10
 ## Documentation
 
 Still confused? Read more about Gluey in the [documentation](http://jadengeller.github.io/Gluey/docs/index.html) or maybe check out how its used in [Axiomatic](https://github.com/JadenGeller/Axiomatic)! Or tweet at [me](https://twitter.com/jadengeller) if you still need some help. :)
-
