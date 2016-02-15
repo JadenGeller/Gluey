@@ -104,7 +104,7 @@ extension Binding: UnifiableType {
         let dried = DriedGlue(glue: value.glue)
         do {
             try action()
-        } catch let error as UnificationError {
+        } catch let error as UnificationErrorType {
             Glue.restore(dried)
             throw error // rethrow!
         }
