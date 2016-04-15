@@ -135,9 +135,9 @@ class GlueyTests: XCTestCase {
     }
     
     func testValue() {
-        let a = Unifiable.Literal(10)
-        let b = Unifiable.Variable(Binding<Int>())
-        let c = Unifiable.Literal(12)
+        let a = Unifiable.literal(10)
+        let b = Unifiable.variable(Binding<Int>())
+        let c = Unifiable.literal(12)
 
         try! Unifiable.unify(a, b)
         XCTAssertEqual(10, b.value)
@@ -150,18 +150,18 @@ class GlueyTests: XCTestCase {
     }
     
     func testRecursiveUnificaiton() {
-        let a = Unifiable.Literal(Unifiable.Variable(Binding<Int>()))
-        let b = Unifiable.Literal(Unifiable.Literal(10))
+        let a = Unifiable.literal(Unifiable.variable(Binding<Int>()))
+        let b = Unifiable.literal(Unifiable.literal(10))
         
         try! Unifiable.unify(a, b)
         XCTAssertEqual(10, b.value?.value)
     }
     
     func testRecursiveBacktracking() {
-        let a = Unifiable.Literal(Unifiable.Variable(Binding<Int>()))
-        let b = Unifiable.Literal(Unifiable.Literal(10))
-        let c = Unifiable.Literal(Unifiable.Literal(20))
-        let d = Unifiable.Literal(Unifiable.Variable(Binding<Int>()))
+        let a = Unifiable.literal(Unifiable.variable(Binding<Int>()))
+        let b = Unifiable.literal(Unifiable.literal(10))
+        let c = Unifiable.literal(Unifiable.literal(20))
+        let d = Unifiable.literal(Unifiable.variable(Binding<Int>()))
         
         try! Unifiable.unify(a, b)
         do {
@@ -175,20 +175,20 @@ class GlueyTests: XCTestCase {
     }
     
     func testCopy() {
-        let a = Unifiable.Variable(Binding<Int>())
-        let b = Unifiable.Variable(Binding<Int>())
+        let a = Unifiable.variable(Binding<Int>())
+        let b = Unifiable.variable(Binding<Int>())
         try! Unifiable.unify(a, b)
         let context = CopyContext()
         let aa = Unifiable.copy(a, withContext: context)
         let bb = Unifiable.copy(b, withContext: context)
         
-        try! Unifiable.unify(a, Unifiable.Literal(1))
+        try! Unifiable.unify(a, Unifiable.literal(1))
         XCTAssertEqual(1, b.value)
         XCTAssertEqual(1, a.value)
         XCTAssertEqual(nil, aa.value)
         XCTAssertEqual(nil, bb.value)
         
-        try! Unifiable.unify(aa, Unifiable.Literal(2))
+        try! Unifiable.unify(aa, Unifiable.literal(2))
         XCTAssertEqual(1, b.value)
         XCTAssertEqual(1, a.value)
         XCTAssertEqual(2, aa.value)
@@ -196,20 +196,20 @@ class GlueyTests: XCTestCase {
     }
     
     func testRecursiveCopy() {
-        let a = Unifiable.Literal(Unifiable.Variable(Binding<Int>()))
-        let b = Unifiable.Literal(Unifiable.Variable(Binding<Int>()))
+        let a = Unifiable.literal(Unifiable.variable(Binding<Int>()))
+        let b = Unifiable.literal(Unifiable.variable(Binding<Int>()))
         try! Unifiable.unify(a, b)
         let context = CopyContext()
         let aa = Unifiable.copy(a, withContext: context)
         let bb = Unifiable.copy(b, withContext: context)
         
-        try! Unifiable.unify(a, Unifiable.Literal(Unifiable.Literal(1)))
+        try! Unifiable.unify(a, Unifiable.literal(Unifiable.literal(1)))
         XCTAssertEqual(1, b.value!.value)
         XCTAssertEqual(1, a.value!.value)
         XCTAssertEqual(nil, aa.value!.value)
         XCTAssertEqual(nil, bb.value!.value)
         
-        try! Unifiable.unify(aa, Unifiable.Literal(Unifiable.Literal(2)))
+        try! Unifiable.unify(aa, Unifiable.literal(Unifiable.literal(2)))
         XCTAssertEqual(1, b.value!.value)
         XCTAssertEqual(1, a.value!.value)
         XCTAssertEqual(2, aa.value!.value)
