@@ -42,7 +42,7 @@ extension Unifiable: CustomStringConvertible {
     public var description: String {
         switch self {
         case .literal(let value):
-            return String(value)
+            return String(describing: value)
         case .variable(let binding):
             return binding.description
         }
@@ -51,7 +51,7 @@ extension Unifiable: CustomStringConvertible {
 
 extension Unifiable: UnifiableType {
     /// Unifies `lhs` with `rhs`, otherwise throws a `UnificationError`.
-    public static func unify(lhs: Unifiable, _ rhs: Unifiable) throws {
+    public static func unify(_ lhs: Unifiable, _ rhs: Unifiable) throws {
         switch (lhs, rhs) {
         case let (.literal(l), .literal(r)):
             guard l == r else {
@@ -68,7 +68,7 @@ extension Unifiable: UnifiableType {
     
     /// Performs `action` as an operation on `self` such that the
     /// `self` preserves its initial `glue` value if the operation fails.
-    public static func attempt(value: Unifiable, _ action: () throws -> ()) throws {
+    public static func attempt(_ value: Unifiable, _ action: () throws -> ()) throws {
         switch value {
         case .literal:
             try action()
@@ -109,7 +109,7 @@ extension Unifiable where Element: UnifiableType {
 extension Unifiable: Equatable { }
 /// True if `lhs` and `rhs` are the same value or if they are bound together.
 public func ==<Element: Equatable>(lhs: Unifiable<Element>, rhs: Unifiable<Element>) -> Bool {
-    if let leftValue = lhs.value, rightValue = rhs.value {
+    if let leftValue = lhs.value, let rightValue = rhs.value {
         return leftValue == rightValue
     } else if case let .variable(leftBinding) = lhs, case let .variable(rightBinding) = rhs {
         return leftBinding.glue === rightBinding.glue
@@ -123,7 +123,7 @@ public func ==<Element: Equatable>(lhs: Unifiable<Element>, rhs: Unifiable<Eleme
 extension Unifiable: ContextCopyable {
     /// Copies `this` reusing any substructure that has already been copied within
     /// this context, and storing any newly generated substructure into the context.
-    public static func copy(this: Unifiable, withContext context: CopyContext) -> Unifiable {
+    public static func copy(_ this: Unifiable, withContext context: CopyContext) -> Unifiable {
         switch this {
         case .literal(let value):
             return .literal(value)
@@ -137,7 +137,7 @@ extension Unifiable: ContextCopyable {
 extension Unifiable where Element: ContextCopyable {
     /// Copies `this` reusing any substructure that has already been copied within
     /// this context, and storing any newly generated substructure into the context.
-    public static func copy(this: Unifiable, withContext context: CopyContext) -> Unifiable {
+    public static func copy(_ this: Unifiable, withContext context: CopyContext) -> Unifiable {
         switch this {
         case .literal(let value):
             return .literal(Element.copy(value, withContext: context))
