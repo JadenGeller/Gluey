@@ -13,5 +13,5 @@ public protocol UnifiableType {
     
     /// Performs `action` as an operation on `self` such that the
     /// `self` preserves its initial `glue` value if the operation fails.
-    static func attempt(_ value: Self, _ action: () throws -> ()) throws
+    static func attempt(_ value: Self, _ action: @escaping () throws -> ()) throws
 }

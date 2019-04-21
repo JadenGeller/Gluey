@@ -96,7 +96,7 @@ extension Unifiable where Element: UnifiableType {
     
     /// Performs `action` as an operation on `self` such that the
     /// `self` preserves its initial `glue` value if the operation fails.
-    public static func attempt(value: Unifiable, _ action: () throws -> ()) throws {
+    public static func attempt(value: Unifiable, _ action: @escaping () throws -> ()) throws {
         switch value {
         case .literal(let inner):
             try Element.attempt(inner, action)
