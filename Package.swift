@@ -22,6 +22,10 @@ let package = Package(
     .target(
       name: "Gluey",
       dependencies: []
-    )
+    ),
+    .testTarget(
+      name: "GlueyTests",
+      dependencies: ["Gluey"]
+    ),
   ]
 )

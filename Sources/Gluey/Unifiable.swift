@@ -81,7 +81,7 @@ extension Unifiable: UnifiableType {
 // Recursive unification
 extension Unifiable where Element: UnifiableType {
     /// Recursively unifies `lhs` with `rhs`, otherwise throws a `UnificationError`.
-    public static func unify(lhs: Unifiable, _ rhs: Unifiable) throws {
+    public static func unify(_ lhs: Unifiable, _ rhs: Unifiable) throws {
         switch (lhs, rhs) {
         case let (.literal(l), .literal(r)):
             try Element.unify(l, r)
