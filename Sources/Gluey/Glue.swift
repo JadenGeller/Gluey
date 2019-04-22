@@ -40,7 +40,7 @@ extension Glue {
         let merged = try Glue(value: unifiedValue(glue))
         
         // Update each binding to use this glue.
-        glue.flatMap{ $0.bindings }.forEach{
+        glue.flatMap{ $0.bindings }.forEach {
             $0.glue = merged
         }
     }

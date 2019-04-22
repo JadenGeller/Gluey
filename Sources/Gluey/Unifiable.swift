@@ -96,7 +96,7 @@ extension Unifiable where Element: UnifiableType {
     
     /// Performs `action` as an operation on `self` such that the
     /// `self` preserves its initial `glue` value if the operation fails.
-    public static func attempt(value: Unifiable, _ action: @escaping () throws -> ()) throws {
+    public static func attempt(_ value: Unifiable, _ action: @escaping () throws -> ()) throws {
         switch value {
         case .literal(let inner):
             try Element.attempt(inner, action)
@@ -106,15 +106,16 @@ extension Unifiable where Element: UnifiableType {
     }
 }
 
-extension Unifiable: Equatable { }
-/// True if `lhs` and `rhs` are the same value or if they are bound together.
-public func ==<Element: Equatable>(lhs: Unifiable<Element>, rhs: Unifiable<Element>) -> Bool {
-    if let leftValue = lhs.value, let rightValue = rhs.value {
-        return leftValue == rightValue
-    } else if case let .variable(leftBinding) = lhs, case let .variable(rightBinding) = rhs {
-        return leftBinding.glue === rightBinding.glue
-    } else {
-        return false
+extension Unifiable: Equatable {
+    /// True if `lhs` and `rhs` are the same value or if they are bound together.
+    public static func ==(lhs: Unifiable<Element>, rhs: Unifiable<Element>) -> Bool {
+        if let leftValue = lhs.value, let rightValue = rhs.value {
+            return leftValue == rightValue
+        } else if case let .variable(leftBinding) = lhs, case let .variable(rightBinding) = rhs {
+            return leftBinding.glue === rightBinding.glue
+        } else {
+            return false
+        }
     }
 }
 

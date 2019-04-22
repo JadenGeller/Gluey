@@ -57,7 +57,7 @@ extension Binding {
 extension Binding where Element: UnifiableType {
     /// If `binding` has no value set, its value is set to `newValue`. Otherwise, the current
     /// `value` is unified with `newValue`.
-    public static func resolve(binding: Binding, withValue newValue: Element) throws {
+    public static func resolve(_ binding: Binding, withValue newValue: Element) throws {
         if let value = binding.value {
             try Element.unify(value, newValue)
         } else {
@@ -80,14 +80,16 @@ extension Binding: CustomStringConvertible {
 // MARK: Hashing
 
 extension Binding: Hashable {
-    public var hashValue: Int {
-        return ObjectIdentifier(self).hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(self))
     }
 }
 
+extension Binding: Equatable {
 // Reference identity
-public func ==<Element>(lhs: Binding<Element>, rhs: Binding<Element>) -> Bool {
-    return lhs === rhs
+    public static func ==<Element>(lhs: Binding<Element>, rhs: Binding<Element>) -> Bool {
+        return lhs === rhs
+    }
 }
 
 // MARK: UnifiableType
