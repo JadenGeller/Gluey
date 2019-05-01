@@ -17,7 +17,7 @@ public final class Binding<Element: Equatable> {
         didSet  { glue.bindings.insert(self) }
     }
     
-    private init(glue: Glue<Element>) {
+    init(glue: Glue<Element>) {
         self.glue = glue
         self.glue.bindings.insert(self)
     }
@@ -43,7 +43,7 @@ public final class Binding<Element: Equatable> {
 extension Binding {
     /// Associates the `binding` with the `newValue` if possible, throwing a `UnificationError`
     /// if the `binding` is already associated with a different value.
-    public static func resolve(binding: Binding, withValue newValue: Element) throws {
+    public static func resolve(_ binding: Binding, withValue newValue: Element) throws {
         if let value = binding.value {
             guard value == newValue else {
                 throw UnificationError("Cannot resolve binding already bound to a different value.")
@@ -57,7 +57,7 @@ extension Binding {
 extension Binding where Element: UnifiableType {
     /// If `binding` has no value set, its value is set to `newValue`. Otherwise, the current
     /// `value` is unified with `newValue`.
-    public static func resolve(binding: Binding, withValue newValue: Element) throws {
+    public static func resolve(_ binding: Binding, withValue newValue: Element) throws {
         if let value = binding.value {
             try Element.unify(value, newValue)
         } else {
@@ -70,9 +70,9 @@ extension Binding: CustomStringConvertible {
     /// A textual representation of the value or the binding if no value exists.
     public var description: String {
         if let value = value {
-            return String(value)
+            return String(describing: value)
         } else {
-            return "_B" + String(ObjectIdentifier(glue).uintValue)
+            return "_B" + String(describing: ObjectIdentifier(glue))
         }
     }
 }
@@ -80,31 +80,33 @@ extension Binding: CustomStringConvertible {
 // MARK: Hashing
 
 extension Binding: Hashable {
-    public var hashValue: Int {
-        return ObjectIdentifier(self).hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(self))
     }
 }
 
+extension Binding: Equatable {
 // Reference identity
-public func ==<Element>(lhs: Binding<Element>, rhs: Binding<Element>) -> Bool {
-    return lhs === rhs
+    public static func ==<Element>(lhs: Binding<Element>, rhs: Binding<Element>) -> Bool {
+        return lhs === rhs
+    }
 }
 
 // MARK: UnifiableType
 
 extension Binding: UnifiableType {
     /// Unifies `lhs` with `rhs`, otherwise throws a `UnificationError`.
-    public static func unify(lhs: Binding, _ rhs: Binding) throws {
+    public static func unify(_ lhs: Binding, _ rhs: Binding) throws {
         try Glue.merge([lhs.glue, rhs.glue])
     }
     
     /// Performs `action` as an operation on `self` such that the
     /// `self` preserves its initial `glue` value if the operation fails.
-    public static func attempt(value: Binding, _ action: () throws -> ()) throws {
+    public static func attempt(_ value: Binding, _ action: () throws -> ()) throws {
         let dried = DriedGlue(glue: value.glue)
         do {
             try action()
-        } catch let error as UnificationErrorType {
+        } catch let error as UnificationError {
             Glue.restore(dried)
             throw error // rethrow!
         }
@@ -116,7 +118,7 @@ extension Binding: UnifiableType {
 extension Binding: ContextCopyable {
     /// Copies `this` reusing any substructure that has already been copied within
     /// this context, and storing any newly generated substructure into the context.
-    public static func copy(this: Binding, withContext context: CopyContext) -> Binding {
+    public static func copy(_ this: Binding, withContext context: CopyContext) -> Binding {
         return Binding(glue: context.copy(this.glue))
     }
 }

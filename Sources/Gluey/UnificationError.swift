@@ -6,10 +6,8 @@
 //  Copyright © 2016 Jaden Geller. All rights reserved.
 //
 
-public protocol UnificationErrorType: ErrorType { }
-
 /// Error thrown when `UnifiableType` types fail to unify.
-public struct UnificationError: UnificationErrorType {
+public struct UnificationError: Error {
     public init(_ message: String) {
         self.message = message
     }

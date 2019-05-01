@@ -12,7 +12,7 @@
 public protocol ContextCopyable {
     /// Copies `this` reusing any substructure that has already been copied within
     /// this context, and storing any newly generated substructure into the context.
-    static func copy(this: Self, withContext context: CopyContext) -> Self
+    static func copy(_ this: Self, withContext context: CopyContext) -> Self
 }
 
 /// Defines context in which copying occurs such that repeated substructure
@@ -26,7 +26,7 @@ public final class CopyContext {
     /// Creates a copy of a given `Glue` value and stores it for future use,
     /// or returns an existing copy of the given `Glue` if it has already been
     /// copied within this context.
-    internal func copy<Element: Equatable>(oldValue: Glue<Element>) -> Glue<Element> {
+    func copy<Element: Equatable>(_ oldValue: Glue<Element>) -> Glue<Element> {
         if let newValue = backing[AnyGlue(oldValue)] {
             return newValue.glue as! Glue<Element>
         } else {
@@ -43,11 +43,14 @@ private struct AnyGlue: Hashable {
     init<Element: Equatable>(_ glue: Glue<Element>) {
         self.glue = glue
     }
-    
-    var hashValue: Int {
-        return ObjectIdentifier(glue).hashValue
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(glue))
     }
 }
-private func ==(lhs: AnyGlue, rhs: AnyGlue) -> Bool {
-    return lhs.glue === rhs.glue
+
+extension AnyGlue: Equatable {
+    static func ==(lhs: AnyGlue, rhs: AnyGlue) -> Bool {
+        return lhs.glue === rhs.glue
+    }
 }

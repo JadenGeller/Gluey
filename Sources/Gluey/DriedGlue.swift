@@ -21,7 +21,7 @@ internal struct DriedGlue<Element: Equatable> {
 extension Glue {
     /// Restore by creating a new `Glue` value from the saved stated, and updating
     /// all saved bindings to utilize this `Glue`.
-    internal static func restore(dried: DriedGlue<Element>) {
+    static func restore(_ dried: DriedGlue<Element>) {
         let restored = Glue(value: dried.value)
         
         for binding in dried.bindings {
